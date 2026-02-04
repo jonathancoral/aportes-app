@@ -3,159 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#F0F4F9">
-    <meta name="description" content="Calculadora de Seguridad Social M3 Expressive">
+    <meta name="theme-color" content="#F9F9FF">
     <title>Seguridad Social</title>
     
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,0" rel="stylesheet" />
 
     <style>
-        /* =========================================
-           DESIGN TOKENS: MATERIAL 3 EXPRESSIVE
-           Source Color: Cobalt Blue (#3949AB)
-           ========================================= */
         :root {
-            /* Motion Easing */
-            --motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0, 1.0);
-            --motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1.0);
-            --motion-duration-medium: 400ms;
-            --motion-duration-short: 200ms;
+            /* Motion: Emphasized Easing (Android 16) */
+            --motion-emphasized: cubic-bezier(0.2, 0.0, 0, 1.0);
+            --duration-medium: 400ms;
 
-            /* Light Theme (Default) */
+            /* Paleta M3 Expressive (Cobalt) */
             --md-sys-color-primary: #3949AB;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #DEE0FF;
             --md-sys-color-on-primary-container: #00105C;
-            --md-sys-color-secondary: #5B5D72;
-            --md-sys-color-secondary-container: #E0E1F9;
-            --md-sys-color-on-secondary-container: #181A2C;
-            --md-sys-color-tertiary: #77536D;
             --md-sys-color-surface: #F9F9FF;
             --md-sys-color-on-surface: #1A1B21;
-            --md-sys-color-surface-container-low: #F3F3FA;
             --md-sys-color-surface-container: #EDEDF4;
             --md-sys-color-surface-container-high: #E7E8EE;
             --md-sys-color-outline: #767680;
             --md-sys-color-outline-variant: #C6C5D0;
-            --md-sys-color-scrim: #000000;
 
-            /* Typography */
-            --md-ref-typeface: 'Roboto Flex', sans-serif;
-            
-            /* Shapes (Expressive) */
-            --md-sys-shape-corner-extra-large: 28px;
-            --md-sys-shape-corner-large: 16px;
-            --md-sys-shape-corner-medium: 12px;
-            --md-sys-shape-corner-full: 999px;
+            --md-sys-shape-extra-large: 28px;
         }
 
-        /* Dark Theme Override */
         [data-theme="dark"] {
             --md-sys-color-primary: #BAC3FF;
             --md-sys-color-on-primary: #001F60;
             --md-sys-color-primary-container: #203190;
             --md-sys-color-on-primary-container: #DEE0FF;
-            --md-sys-color-secondary: #C3C5DD;
-            --md-sys-color-secondary-container: #434659;
-            --md-sys-color-on-secondary-container: #E0E1F9;
-            --md-sys-color-tertiary: #E6BAD7;
             --md-sys-color-surface: #121318;
             --md-sys-color-on-surface: #E4E1E6;
-            --md-sys-color-surface-container-low: #1A1B21;
             --md-sys-color-surface-container: #1E1F25;
             --md-sys-color-surface-container-high: #282A30;
-            --md-sys-color-outline: #90909A;
-            --md-sys-color-outline-variant: #46464F;
         }
 
-        /* =========================================
-           RESET & SCAFFOLD
-           ========================================= */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
+
         body {
             margin: 0;
-            padding: 0;
-            font-family: var(--md-ref-typeface);
+            font-family: 'Roboto Flex', sans-serif;
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            transition: background-color var(--motion-duration-medium) var(--motion-easing-emphasized);
-            /* Edge to Edge padding support */
-            padding-bottom: env(safe-area-inset-bottom); 
+            transition: background-color var(--duration-medium) var(--motion-emphasized);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
-        /* Scroll Bounce (Android Style) */
-        html { overscroll-behavior-y: contain; }
-
-        /* =========================================
-           COMPONENTS
-           ========================================= */
-        
-        /* 1. TOP APP BAR (Center Aligned) */
+        /* Top Bar */
         .top-app-bar {
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
             background: var(--md-sys-color-surface);
-            transition: background-color var(--motion-duration-medium);
             padding-top: env(safe-area-inset-top);
         }
-        
-        .headline-text {
+
+        .top-app-bar h1 {
             font-size: 22px;
             font-weight: 400;
-            letter-spacing: 0;
+            margin: 0;
         }
 
-        /* 2. MAIN CONTAINER */
+        /* Scaffold */
         .scaffold-body {
             flex: 1;
-            padding: 16px 24px 80px 24px; /* Bottom padding for Nav Bar */
-            max-width: 600px;
-            width: 100%;
+            padding: 16px 24px 100px 24px;
+            max-width: 500px;
             margin: 0 auto;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
-        /* 3. FILLED TEXT FIELD (M3) */
+        /* Inputs Minimalistas (Sin Iconos) */
         .md-text-field {
             position: relative;
             background-color: var(--md-sys-color-surface-container-high);
-            border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 4px 4px;
-            height: 56px;
+            border-radius: var(--md-sys-shape-extra-large);
+            height: 64px;
             display: flex;
-            align-items: center;
-            padding: 0 16px;
+            flex-direction: column;
+            padding: 0 20px;
             transition: background-color 0.2s;
             cursor: text;
         }
 
-        /* Active Indicator (Underline) */
         .md-text-field::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 20px; right: 20px;
             height: 1px;
-            background-color: var(--md-sys-color-outline);
+            background-color: var(--md-sys-color-outline-variant);
         }
-        
+
         .md-text-field:focus-within::after {
             height: 2px;
             background-color: var(--md-sys-color-primary);
@@ -168,259 +120,166 @@
             background: transparent;
             outline: none;
             font-family: inherit;
-            font-size: 16px;
+            font-size: 17px;
             color: var(--md-sys-color-on-surface);
-            padding-top: 24px; /* Space for label */
-            padding-bottom: 8px;
-            caret-color: var(--md-sys-color-primary);
+            padding-top: 20px;
         }
 
         .md-label {
             position: absolute;
-            left: 16px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 16px;
             color: var(--md-sys-color-outline);
             pointer-events: none;
-            transition: all 200ms var(--motion-easing-emphasized);
+            transition: all 200ms var(--motion-emphasized);
             transform-origin: left top;
         }
 
-        /* Floating State */
         .md-text-field:focus-within .md-label,
-        .md-text-field input:not(:placeholder-shown) + .md-label,
-        .md-text-field.has-value .md-label {
-            top: 8px;
+        .md-text-field input:not(:placeholder-shown) + .md-label {
+            top: 10px;
             transform: translateY(0) scale(0.75);
             color: var(--md-sys-color-primary);
+            font-weight: 600;
         }
 
-        /* Leading Icon */
-        .leading-icon {
-            font-size: 24px;
-            color: var(--md-sys-color-on-surface-variant);
-            margin-right: 12px;
-        }
-
-        /* 4. SELECT / DROPDOWN TRIGGER */
-        .md-dropdown-trigger {
-            cursor: pointer;
-            position: relative;
-        }
-        .md-dropdown-trigger input { pointer-events: none; } /* Evita teclado en selector */
-
-        /* 5. CARD (RESULTS) */
+        /* Card de Resultados */
         .md-card {
             background-color: var(--md-sys-color-surface-container);
-            border-radius: var(--md-sys-shape-corner-extra-large);
+            border-radius: var(--md-sys-shape-extra-large);
             padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            /* Tonal Elevation calculation (no shadows) */
-            position: relative;
-            overflow: hidden;
-            transition: transform 100ms var(--motion-easing-emphasized);
+            gap: 12px;
         }
-        
-        .md-card:active { transform: scale(0.98); }
 
         .card-row { display: flex; justify-content: space-between; align-items: center; }
-        .row-label { font-size: 14px; color: var(--md-sys-color-on-surface); opacity: 0.8; font-weight: 500;}
-        .row-value { font-size: 16px; color: var(--md-sys-color-on-surface); font-weight: 500; }
-        
-        .total-container {
+        .row-label { font-size: 14px; opacity: 0.7; }
+        .row-value { font-size: 16px; font-weight: 500; }
+
+        .total-pill {
             background-color: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
-            padding: 16px;
-            border-radius: var(--md-sys-shape-corner-large);
-            margin-top: 8px;
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .total-value { font-size: 24px; font-weight: 700; font-variation-settings: 'wght' 700; }
 
-        /* 6. NAVIGATION BAR (Bottom) */
+        .total-value { font-size: 24px; font-weight: 700; }
+
+        /* Navigation Bar */
         .nav-bar {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 80px;
             background-color: var(--md-sys-color-surface-container);
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
-            z-index: 20;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 4px;
-            width: 64px;
             cursor: pointer;
             color: var(--md-sys-color-on-surface-variant);
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .nav-icon-container {
-            width: 64px;
-            height: 32px;
-            border-radius: 16px; /* Pill Shape */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 200ms var(--motion-easing-emphasized);
+        .nav-pill {
+            width: 64px; height: 32px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background-color 0.2s;
         }
 
-        .nav-item.active .nav-icon-container {
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-        }
-        
-        .nav-item.active .material-symbols-rounded {
-            font-variation-settings: 'FILL' 1;
+        .nav-item.active .nav-pill {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
         }
 
+        .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
         .nav-label { font-size: 12px; font-weight: 500; }
 
-        /* 7. DIALOG (Bottom Sheet Style) */
+        /* Dialog / Sheet */
         dialog {
             border: none;
-            margin: 0;
-            padding: 0;
+            border-radius: 28px 28px 0 0;
+            background-color: var(--md-sys-color-surface-container);
             width: 100%;
             max-width: 100%;
-            height: auto;
-            max-height: 80vh;
-            border-radius: 28px 28px 0 0;
-            background-color: var(--md-sys-color-surface-container-low);
-            color: var(--md-sys-color-on-surface);
             position: fixed;
             bottom: 0;
-            top: auto;
-            box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
-            /* Animation */
+            padding: 24px;
             transform: translateY(100%);
-            opacity: 0;
-            transition: transform 400ms var(--motion-easing-emphasized), opacity 400ms;
+            transition: transform 0.4s var(--motion-emphasized);
+            display: block;
         }
 
-        dialog[open] {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        dialog[open] { transform: translateY(0); }
+        dialog::backdrop { background: rgba(0,0,0,0.4); }
 
-        dialog::backdrop {
-            background: rgba(0, 0, 0, 0.32);
-            opacity: 0;
-            transition: opacity 400ms;
-        }
-        dialog[open]::backdrop { opacity: 1; }
-
-        .sheet-handle {
-            width: 32px;
-            height: 4px;
-            background-color: var(--md-sys-color-outline-variant);
-            border-radius: 2px;
-            margin: 16px auto;
-            opacity: 0.4;
-        }
-
-        .sheet-content { padding: 0 24px 48px 24px; }
-        
         .menu-item {
+            height: 56px;
             display: flex;
             align-items: center;
-            height: 56px;
             font-size: 16px;
-            color: var(--md-sys-color-on-surface);
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 16px;
+            padding: 0 16px;
             cursor: pointer;
         }
-        .menu-item:last-child { border: none; }
-        .menu-item .material-symbols-rounded { margin-right: 16px; color: var(--md-sys-color-primary); }
+        .menu-item:active { background-color: var(--md-sys-color-primary-container); }
 
-        /* 8. RIPPLE EFFECT */
-        .ripple-surface {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            overflow: hidden;
-            border-radius: inherit;
-            pointer-events: none; /* Pass through clicks */
-        }
-        .ripple-wave {
-            position: absolute;
-            border-radius: 50%;
-            background-color: var(--md-sys-color-on-surface);
-            opacity: 0.12;
-            transform: scale(0);
-            animation: ripple 600ms linear;
-        }
-        @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        /* Utilities */
         .hidden { display: none !important; }
-        .scale-in { animation: scaleIn 300ms var(--motion-easing-emphasized); }
-        @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; }}
-
-        /* Sección de Vistas (Tabs) */
         .view-section { display: none; }
-        .view-section.active-view { display: flex; flex-direction: column; gap: 24px; animation: fadeIn 300ms; }
+        .active-view { display: flex; flex-direction: column; gap: 20px; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; }}
-
     </style>
 </head>
 <body>
 
     <header class="top-app-bar">
-        <h1 class="headline-text">Seguridad Social</h1>
+        <h1>Seguridad Social</h1>
     </header>
 
     <main class="scaffold-body">
         
         <section id="view-home" class="view-section active-view">
-            
-            <div class="md-text-field" tabindex="0">
-                <div class="ripple-surface"></div>
+            <div class="md-text-field">
                 <input type="number" id="pago" placeholder=" " inputmode="numeric">
                 <label class="md-label">Ingreso base mensual</label>
             </div>
 
-            <div class="md-text-field md-dropdown-trigger" tabindex="0" id="metodoTrigger">
-                <div class="ripple-surface"></div>
-                <input type="text" id="metodoTexto" value="Ingresar días manualmente" readonly>
+            <div class="md-text-field" id="metodoTrigger" style="cursor:pointer;">
+                <input type="text" id="metodoTexto" value="Ingresar días manualmente" readonly style="cursor:pointer;">
                 <input type="hidden" id="metodoValue" value="1">
                 <label class="md-label">Método de cálculo</label>
-                <span class="material-symbols-rounded" style="position: absolute; right: 16px;">arrow_drop_down</span>
             </div>
 
-            <div id="group-dias" class="md-text-field scale-in" tabindex="0">
-                <div class="ripple-surface"></div>
+            <div id="group-dias" class="md-text-field">
                 <input type="number" id="dias" placeholder=" " inputmode="numeric">
                 <label class="md-label">Días trabajados</label>
             </div>
 
-            <div id="group-fechas" class="hidden" style="display: flex; flex-direction: column; gap: 16px;">
-                <div class="md-text-field scale-in" tabindex="0">
-                    <div class="ripple-surface"></div>
-                    <input type="date" id="fecha1" placeholder=" ">
-                    <label class="md-label">Fecha inicial</label>
+            <div id="group-fechas" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
+                <div class="md-text-field">
+                    <input type="date" id="fecha1">
+                    <label class="md-label" style="top:10px; transform:scale(0.75);">Fecha inicial</label>
                 </div>
-                <div class="md-text-field scale-in" tabindex="0">
-                    <div class="ripple-surface"></div>
-                    <input type="date" id="fecha2" placeholder=" ">
-                    <label class="md-label">Fecha final</label>
+                <div class="md-text-field">
+                    <input type="date" id="fecha2">
+                    <label class="md-label" style="top:10px; transform:scale(0.75);">Fecha final</label>
                 </div>
             </div>
 
             <div class="md-card">
-                <div class="ripple-surface"></div>
                 <div class="card-row">
                     <span class="row-label">IBC Base</span>
                     <span class="row-value" id="out-ibc">$0</span>
@@ -429,7 +288,6 @@
                     <span class="row-label">Días liquidados</span>
                     <span class="row-value" id="out-dias">0</span>
                 </div>
-                <div style="height: 1px; background: var(--md-sys-color-outline-variant); margin: 8px 0; opacity: 0.5;"></div>
                 <div class="card-row">
                     <span class="row-label">Salud (12.5%)</span>
                     <span class="row-value" id="out-salud">$0</span>
@@ -438,36 +296,23 @@
                     <span class="row-label">Pensión (16.0%)</span>
                     <span class="row-value" id="out-pension">$0</span>
                 </div>
-
-                <div class="total-container">
-                    <div class="card-row">
-                        <span style="font-size: 14px; opacity: 0.9;">Total a Pagar</span>
-                        <span class="total-value" id="out-total">$0</span>
-                    </div>
+                <div class="total-pill">
+                    <span style="font-weight:500;">Total a Pagar</span>
+                    <span class="total-value" id="out-total">$0</span>
                 </div>
             </div>
-
         </section>
 
         <section id="view-settings" class="view-section">
             <div class="md-card">
-                <h2 style="font-size: 20px; margin: 0 0 16px 0;">Configuración</h2>
-                
-                <div class="menu-item" id="themeToggleBtn" style="justify-content: space-between; border:none;">
-                    <div style="display:flex; align-items:center;">
-                        <span class="material-symbols-rounded">dark_mode</span>
-                        <span>Tema Oscuro</span>
-                    </div>
-                    <div style="width: 52px; height: 32px; background: var(--md-sys-color-surface-container-high); border-radius: 16px; position: relative; border: 2px solid var(--md-sys-color-outline);">
-                         <div id="switchThumb" style="width: 16px; height: 16px; background: var(--md-sys-color-outline); border-radius: 50%; position: absolute; top: 6px; left: 6px; transition: all 0.2s;"></div>
-                    </div>
+                <h2 style="margin:0 0 16px 0; font-size:18px;">Personalización</h2>
+                <div class="menu-item" id="themeBtn" style="justify-content:space-between;">
+                    <span>Tema Oscuro</span>
+                    <span class="material-symbols-rounded">contrast</span>
                 </div>
-
-                <div style="height: 1px; background: var(--md-sys-color-outline-variant); margin: 8px 0;"></div>
-
-                <h3 style="font-size: 16px; margin: 16px 0 8px 0;">Acerca de</h3>
-                <p style="margin: 0; color: var(--md-sys-color-on-surface-variant);">Desarrollado por <strong>Jonathan Coral</strong></p>
-                <p style="margin: 4px 0 0 0; font-size: 14px; color: var(--md-sys-color-outline);">jonathancoral@unicomfacauca.edu.co</p>
+                <div style="height:1px; background:var(--md-sys-color-outline-variant); margin:12px 0;"></div>
+                <p style="margin:0; font-size:14px; color:var(--md-sys-color-outline);">Jonathan Coral</p>
+                <p style="margin:4px 0 0 0; font-size:12px; opacity:0.7;">jonathancoral@unicomfacauca.edu.co</p>
             </div>
         </section>
 
@@ -475,245 +320,93 @@
 
     <nav class="nav-bar">
         <div class="nav-item active" data-target="view-home">
-            <div class="nav-icon-container">
-                <span class="material-symbols-rounded">calculate</span>
-            </div>
+            <div class="nav-pill"><span class="material-symbols-rounded">calculate</span></div>
             <span class="nav-label">Calcular</span>
         </div>
         <div class="nav-item" data-target="view-settings">
-            <div class="nav-icon-container">
-                <span class="material-symbols-rounded">settings</span>
-            </div>
+            <div class="nav-pill"><span class="material-symbols-rounded">settings</span></div>
             <span class="nav-label">Ajustes</span>
         </div>
     </nav>
 
-    <dialog id="methodSheet">
-        <div class="sheet-handle"></div>
-        <div class="sheet-content">
-            <h3 style="font-size: 22px; margin: 0 0 24px 0; text-align: center;">Seleccionar método</h3>
-            
-            <div class="menu-item" onclick="selectMethod('1', 'Ingresar días manualmente')">
-                <span class="material-symbols-rounded">edit_calendar</span>
-                Ingresar días manualmente
-            </div>
-            <div class="menu-item" onclick="selectMethod('2', 'Calcular rango de fechas')">
-                <span class="material-symbols-rounded">date_range</span>
-                Calcular rango de fechas
-            </div>
-        </div>
+    <dialog id="sheet">
+        <div style="width:32px; height:4px; background:#ccc; border-radius:2px; margin:0 auto 20px;"></div>
+        <div class="menu-item" onclick="selMetodo('1', 'Ingresar días manualmente')">Días manualmente</div>
+        <div class="menu-item" onclick="selMetodo('2', 'Calcular rango de fechas')">Rango de fechas</div>
     </dialog>
 
     <script>
-        /* =========================================
-           CORE LOGIC & UI CONTROLLERS
-           ========================================= */
-
-        const SMMLV_2026 = 1750905;
-        
-        // DOM Elements
+        const SMMLV = 1750905;
         const ui = {
             pago: document.getElementById('pago'),
             dias: document.getElementById('dias'),
             fecha1: document.getElementById('fecha1'),
             fecha2: document.getElementById('fecha2'),
-            metodoValue: document.getElementById('metodoValue'),
-            metodoTexto: document.getElementById('metodoTexto'),
-            groupDias: document.getElementById('group-dias'),
-            groupFechas: document.getElementById('group-fechas'),
-            
-            // Outputs
             outIbc: document.getElementById('out-ibc'),
             outDias: document.getElementById('out-dias'),
             outSalud: document.getElementById('out-salud'),
             outPension: document.getElementById('out-pension'),
             outTotal: document.getElementById('out-total'),
-            
-            // Interaction
-            methodSheet: document.getElementById('methodSheet'),
-            metodoTrigger: document.getElementById('metodoTrigger'),
-            navItems: document.querySelectorAll('.nav-item'),
-            views: document.querySelectorAll('.view-section'),
-            themeToggleBtn: document.getElementById('themeToggleBtn'),
-            switchThumb: document.getElementById('switchThumb')
+            sheet: document.getElementById('sheet')
         };
 
-        // --- 1. RIPPLE EFFECT SYSTEM ---
-        function createRipple(event) {
-            const element = event.currentTarget;
-            const circle = document.createElement("span");
-            const diameter = Math.max(element.clientWidth, element.clientHeight);
-            const radius = diameter / 2;
-            
-            const rect = element.getBoundingClientRect();
-            
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - rect.left - radius}px`;
-            circle.style.top = `${event.clientY - rect.top - radius}px`;
-            circle.classList.add("ripple-wave");
+        const format = (n) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
 
-            const rippleSurface = element.querySelector('.ripple-surface');
-            if (rippleSurface) {
-                rippleSurface.appendChild(circle);
-                setTimeout(() => circle.remove(), 600);
-            }
-        }
+        function calcular() {
+            const pago = parseFloat(ui.pago.value) || 0;
+            const met = document.getElementById('metodoValue').value;
+            let d = 0;
 
-        // Attach Ripple to interactive elements
-        document.querySelectorAll('.md-text-field, .md-card, .menu-item, .nav-item').forEach(el => {
-            el.addEventListener('pointerdown', createRipple);
-        });
-
-
-        // --- 2. BUSINESS LOGIC (Calculations) ---
-        const formatCOP = (num) => new Intl.NumberFormat('es-CO', { 
-            style: 'currency', currency: 'COP', maximumFractionDigits: 0 
-        }).format(num);
-
-        const calculate = () => {
-            const pagoVal = parseFloat(ui.pago.value) || 0;
-            const metodo = ui.metodoValue.value;
-            let diasCalc = 0;
-
-            if (metodo === '1') {
-                diasCalc = parseInt(ui.dias.value) || 0;
-            } else {
+            if (met === '1') d = parseInt(ui.dias.value) || 0;
+            else {
                 const f1 = new Date(ui.fecha1.value + 'T00:00:00');
                 const f2 = new Date(ui.fecha2.value + 'T00:00:00');
-                if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) {
-                    const diffTime = Math.abs(f2 - f1);
-                    diasCalc = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                }
+                if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) d = Math.floor((f2 - f1) / 864e5) + 1;
             }
 
-            if (pagoVal <= 0 || diasCalc <= 0) {
-                updateUI(0, 0, 0, 0, 0);
-                return;
-            }
+            if (pago <= 0 || d <= 0) return resetUI();
 
-            let ibc = (pagoVal * 40) / 100;
-            if (ibc < SMMLV_2026) ibc = SMMLV_2026;
+            let ibc = Math.max(pago * 0.4, SMMLV);
+            const sD = (ibc * 0.125) / 30, pD = (ibc * 0.16) / 30;
+            const rnd = (v) => { let e = Math.floor(v); return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; };
 
-            const saludDia = (ibc * 0.125) / 30;
-            const pensionDia = (ibc * 0.16) / 30;
+            const tS = rnd(sD * d), tP = rnd(pD * d), total = rnd(tS + tP);
 
-            const redondear = (val) => {
-                let entero = Math.floor(val);
-                return (entero % 100 !== 0) ? (Math.floor(entero / 100) + 1) * 100 : entero;
-            };
+            ui.outIbc.textContent = format(ibc);
+            ui.outDias.textContent = d;
+            ui.outSalud.textContent = format(tS);
+            ui.outPension.textContent = format(tP);
+            ui.outTotal.textContent = format(total);
+        }
 
-            const totalSalud = redondear(saludDia * diasCalc);
-            const totalPension = redondear(pensionDia * diasCalc);
-            const granTotal = redondear(totalSalud + totalPension);
+        function resetUI() { ui.outTotal.textContent = "$0"; }
 
-            updateUI(ibc, diasCalc, totalSalud, totalPension, granTotal);
-        };
+        function selMetodo(v, t) {
+            document.getElementById('metodoValue').value = v;
+            document.getElementById('metodoTexto').value = t;
+            document.getElementById('group-dias').classList.toggle('hidden', v === '2');
+            document.getElementById('group-fechas').classList.toggle('hidden', v === '1');
+            ui.sheet.close(); calcular();
+        }
 
-        const updateUI = (ibc, dias, salud, pension, total) => {
-            ui.outIbc.textContent = formatCOP(ibc);
-            ui.outDias.textContent = dias;
-            ui.outSalud.textContent = formatCOP(salud);
-            ui.outPension.textContent = formatCOP(pension);
-            ui.outTotal.textContent = formatCOP(total);
-        };
+        document.getElementById('metodoTrigger').onclick = () => ui.sheet.showModal();
+        ui.sheet.onclick = (e) => { if (e.clientY < ui.sheet.getBoundingClientRect().top) ui.sheet.close(); };
 
-        // Listeners for Calculation
-        ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculate);
-        });
+        ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => document.getElementById(id).oninput = calcular);
 
-
-        // --- 3. UI CONTROLLERS (Navigation & Dialogs) ---
-        
-        // Navigation Bar Logic
-        ui.navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // Visual Update
-                ui.navItems.forEach(nav => nav.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.onclick = () => {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                 item.classList.add('active');
-                
-                // View Switching
-                const targetId = item.getAttribute('data-target');
-                ui.views.forEach(view => view.classList.remove('active-view'));
-                document.getElementById(targetId).classList.add('active-view');
-            });
+                document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
+                document.getElementById(item.dataset.target).classList.add('active-view');
+            };
         });
 
-        // Bottom Sheet Logic (Method Selector)
-        ui.metodoTrigger.addEventListener('click', () => {
-            ui.methodSheet.showModal();
-        });
-
-        // Close dialog when clicking outside (Backdrop)
-        ui.methodSheet.addEventListener('click', (e) => {
-            const rect = ui.methodSheet.getBoundingClientRect();
-            if (e.clientY < rect.top) { // Clicking above the sheet
-                // Predictive Back Simulation (Scale Down)
-                ui.methodSheet.style.transform = "translateY(100%)"; // Slide down manually
-                setTimeout(() => ui.methodSheet.close(), 200);
-            }
-        });
-
-        // Select Method Logic
-        window.selectMethod = (value, text) => {
-            ui.metodoValue.value = value;
-            ui.metodoTexto.value = text;
-            
-            // Toggle Visibility with Animation
-            if (value === '1') {
-                ui.groupDias.classList.remove('hidden');
-                ui.groupFechas.classList.add('hidden');
-            } else {
-                ui.groupDias.classList.add('hidden');
-                ui.groupFechas.classList.remove('hidden');
-            }
-            
-            ui.methodSheet.close();
-            calculate(); // Recalculate based on new inputs
+        document.getElementById('themeBtn').onclick = () => {
+            const isDark = document.body.hasAttribute('data-theme');
+            isDark ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
         };
-
-
-        // --- 4. THEME ENGINE (Dark Mode) ---
-        let isDarkMode = false;
-        
-        ui.themeToggleBtn.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                document.body.setAttribute('data-theme', 'dark');
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#121318');
-                // Animate Switch
-                ui.switchThumb.style.transform = "translateX(20px)";
-                ui.switchThumb.style.background = "var(--md-sys-color-primary)";
-                ui.switchThumb.parentElement.style.borderColor = "var(--md-sys-color-primary)";
-                ui.switchThumb.parentElement.style.background = "var(--md-sys-color-primary-container)";
-            } else {
-                document.body.removeAttribute('data-theme');
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F0F4F9');
-                // Animate Switch Reset
-                ui.switchThumb.style.transform = "translateX(0)";
-                ui.switchThumb.style.background = "var(--md-sys-color-outline)";
-                ui.switchThumb.parentElement.style.borderColor = "var(--md-sys-color-outline)";
-                ui.switchThumb.parentElement.style.background = "transparent";
-            }
-        });
-
-        // --- 5. ENTER KEY NAVIGATION ---
-        const inputs = ['pago', 'dias', 'fecha1', 'fecha2'];
-        inputs.forEach((id, idx) => {
-            const el = document.getElementById(id);
-            if(!el) return;
-            el.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    // Logic to jump to next valid input
-                    // Simplified for brevity
-                    el.blur(); 
-                }
-            });
-        });
-
-        // Service Worker Reg
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-
     </script>
 </body>
 </html>
