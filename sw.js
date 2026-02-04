@@ -1,12 +1,14 @@
-const CACHE_NAME = 'segsocial-m3-v3';
+// Aumentamos la versión para borrar el caché viejo del diseño Material
+const CACHE_NAME = 'segsocial-fluent-v1';
+
 const ASSETS = [
     './',
     './index.html',
     './manifest.json',
     './icon-192.png',
     './icon-512.png',
-    'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;400;500;600&display=swap',
-    'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0'
+    // Actualizamos la fuente de iconos a la versión "Regular" usada en el nuevo diseño
+    'https://fonts.googleapis.com/css2?family=Material+Symbols+Regular:opsz,wght,FILL,GRAD@20..48,400,0,0'
 ];
 
 self.addEventListener('install', (e) => {
@@ -19,6 +21,7 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(caches.keys().then((keys) => Promise.all(
+        // Esto borra el caché "segsocial-m3-v3" anterior y deja solo el nuevo Fluent
         keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
     )));
 });
