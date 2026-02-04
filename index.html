@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad Social 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6750A4">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-surface-container: #F3EDF7;
+            --md-sys-color-outline: #79747E;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--md-sys-color-surface);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--md-sys-color-surface-container);
+            border-radius: 28px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-size: 24px; color: var(--md-sys-color-on-primary-container); text-align: center; margin-bottom: 8px; }
+        p.subtitle { text-align: center; color: var(--md-sys-color-outline); margin-bottom: 24px; font-size: 14px; }
+
+        .input-group { margin-bottom: 16px; position: relative; }
+        
+        label { 
+            display: block; font-size: 12px; font-weight: 500; 
+            color: var(--md-sys-color-primary); margin-bottom: 4px; margin-left: 12px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            background: transparent;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        input:focus { border: 2px solid var(--md-sys-color-primary); }
+
+        .results {
+            margin-top: 24px;
+            background: var(--md-sys-color-primary-container);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .total {
+            border-top: 1px solid var(--md-sys-color-outline);
+            padding-top: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Seguridad Social 2026</h1>
+    <p class="subtitle">Desarrollado por Jonathan Coral</p>
+
+    <div class="input-group">
+        <label>VALOR DEL PAGO</label>
+        <input type="number" id="pago" placeholder="Ej: 2000000" autofocus>
+    </div>
+
+    <div class="input-group">
+        <label>MÉTODO DE CÁLCULO</label>
+        <select id="metodo">
+            <option value="1">Días manuales</option>
+            <option value="2">Rango de fechas</option>
+        </select>
+    </div>
+
+    <div id="sec-dias" class="input-group">
+        <label>DÍAS A LIQUIDAR</label>
+        <input type="number" id="dias" placeholder="Ej: 30">
+    </div>
+
+    <div id="sec-fechas" class="hidden">
+        <div class="input-group">
+            <label>FECHA INICIO</label>
+            <input type="date" id="fecha1">
+        </div>
+        <div class="input-group">
+            <label>FECHA FIN</label>
+            <input type="date" id="fecha2">
+        </div>
+    </div>
+
+    <div class="results">
+        <div class="result-item"><span>IBC Diario:</span> <span id="res-ibc">$0</span></div>
+        <div class="result-item"><span>Días:</span> <span id="res-dias">0</span></div>
+        <div class="result-item"><span>Salud:</span> <span id="res-salud">$0</span></div>
+        <div class="result-item"><span>Pensión:</span> <span id="res-pension">$0</span></div>
+        <div class="result-item total"><span>TOTAL:</span> <span id="res-total">$0</span></div>
+    </div>
+</div>
+
+<script>
+    const smmlv = 1750905;
+
+    // Navegación automática con Enter
+    const inputs = ['pago', 'metodo', 'dias', 'fecha1', 'fecha2'];
+    inputs.forEach((id, index) => {
+        document.getElementById(id).addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                let next = inputs[index + 1];
+                if (id === 'metodo') next = document.getElementById('metodo').value === '1' ? 'dias' : 'fecha1';
+                if (id === 'dias' || id === 'fecha2') return; // Calcular al llegar al final
+                document.getElementById(next)?.focus();
+            }
+        });
+    });
+
+    // Lógica de visibilidad
+    document.getElementById('metodo').addEventListener('change', (e) => {
+        if (e.target.value === '1') {
+            document.getElementById('sec-dias').classList.remove('hidden');
+            document.getElementById('sec-fechas').classList.add('hidden');
+        } else {
+            document.getElementById('sec-dias').classList.add('hidden');
+            document.getElementById('sec-fechas').classList.remove('hidden');
+        }
+    });
+
+    // Función de cálculo (Misma lógica que el .bat)
+    function calcular() {
+        const pago = parseFloat(document.getElementById('pago').value) || 0;
+        const metodo = document.getElementById('metodo').value;
+        let dias = 0;
+
+        if (metodo === '1') {
+            dias = parseInt(document.getElementById('dias').value) || 0;
+        } else {
+            const f1 = new Date(document.getElementById('fecha1').value);
+            const f2 = new Date(document.getElementById('fecha2').value);
+            if (!isNaN(f1) && !isNaN(f2)) {
+                dias = Math.floor((f2 - f1) / (1000 * 60 * 60 * 24)) + 1;
+            }
+        }
+
+        if (pago <= 0 || dias <= 0) return;
+
+        // Lógica Batch exacta
+        let ibcBase = (pago * 40) / 100;
+        if (ibcBase < smmlv) ibcBase = smmlv;
+
+        const saludDiaria = (ibcBase * 12.5) / (100 * 30);
+        const pensionDiaria = (ibcBase * 16) / (100 * 30);
+
+        // Redondeo a centenas (hacia arriba si no es exacto)
+        const redondear = (val) => Math.ceil(val / 100) * 100;
+
+        const totalSalud = redondear(saludDiaria * dias);
+        const totalPension = redondear(pensionDiaria * dias);
+        const totalGral = redondear(totalSalud + totalPension);
+
+        // Renderizar
+        const fmt = (v) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(v);
+        
+        document.getElementById('res-ibc').innerText = fmt(ibcBase);
+        document.getElementById('res-dias').innerText = dias;
+        document.getElementById('res-salud').innerText = fmt(totalSalud);
+        document.getElementById('res-pension').innerText = fmt(totalPension);
+        document.getElementById('res-total').innerText = fmt(totalGral);
+    }
+
+    // Escuchar cambios para cálculo en tiempo real
+    ['pago', 'dias', 'fecha1', 'fecha2', 'metodo'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calcular);
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+</script>
+</body>
+</html>
