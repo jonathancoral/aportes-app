@@ -1,10 +1,10 @@
 {
-  "name": "Seguridad Social 2026",
-  "short_name": "SegSocial Coral",
+  "name": "Seguridad Social",
+  "short_name": "SeguridadSocial",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FAFDFCA",
-  "theme_color": "#006A6A",
+  "background_color": "#F9F9FF",
+  "theme_color": "#F2F6FC",
   "orientation": "portrait",
   "icons": [
     {
