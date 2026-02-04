@@ -1,10 +1,10 @@
 {
-  "name": "Seguridad Social",
-  "short_name": "SeguridadSocial",
+  "name": "Seguridad Social 2026",
+  "short_name": "Seguridad Social",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#F9F9FF",
-  "theme_color": "#F2F6FC",
+  "background_color": "#F3F2F1",
+  "theme_color": "#FFFFFF",
   "orientation": "portrait",
   "icons": [
     {
