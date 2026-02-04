@@ -1,0 +1,16 @@
+{
+  "name": "Seguridad Social 2026",
+  "short_name": "SegSocial",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FEF7FF",
+  "theme_color": "#6750A4",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2845/2845869.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
