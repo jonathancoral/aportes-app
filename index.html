@@ -5,381 +5,354 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Seguridad Social 2026</title>
     
-    <meta name="theme-color" content="#F2F6FC"> <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Regular:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet" />
 
     <style>
-        /* --- DESIGN TOKENS (Material 3 Expressive - Blue/Teal Theme) --- */
+        /* --- FLUENT UI WEB DESIGN TOKENS --- */
         :root {
-            /* Palette simulation */
-            --md-sys-color-primary: #0061A4;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-primary-container: #D1E4FF;
-            --md-sys-color-on-primary-container: #001D36;
+            /* Palette: Microsoft Blue & Neutrals */
+            --fluent-color-brand: #0078D4;
+            --fluent-color-brand-hover: #106EBE;
+            --fluent-color-brand-pressed: #005A9E;
             
-            --md-sys-color-secondary: #535F70;
-            --md-sys-color-secondary-container: #D7E3F7;
-            --md-sys-color-on-secondary-container: #101C2B;
+            --fluent-color-neutral-dark: #201F1E; /* Text Primary */
+            --fluent-color-neutral-primary: #323130;
+            --fluent-color-neutral-secondary: #605E5C; /* Labels */
+            --fluent-color-neutral-tertiary: #A19F9D; /* Icons/Placeholders */
+            --fluent-color-neutral-light: #EDEBE9; /* Borders */
+            --fluent-color-neutral-lighter: #F3F2F1; /* Background App */
+            --fluent-color-white: #FFFFFF;
 
-            --md-sys-color-surface: #F9F9FF;
-            --md-sys-color-on-surface: #191C20;
-            --md-sys-color-surface-container-low: #F3F3FA;
-            --md-sys-color-surface-container: #EDEDF4;
-            --md-sys-color-surface-container-high: #E7E8EE;
+            /* Typography: Segoe UI Variable / System */
+            --fluent-font-family: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+            --fluent-font-size-base: 14px;
+            --fluent-font-size-header: 20px;
+            --fluent-font-weight-regular: 400;
+            --fluent-font-weight-semibold: 600;
 
-            --md-sys-color-outline: #73777F;
-            --md-sys-color-outline-variant: #C3C7CF;
-
-            /* Shapes (Expressive) */
-            --md-sys-shape-corner-extra-large: 28px;
-            --md-sys-shape-corner-large: 16px;
-            --md-sys-shape-corner-full: 100px;
-
-            /* Typography */
-            --font-family: 'Roboto Flex', sans-serif;
+            /* Spacing & Shapes */
+            --fluent-border-radius: 4px; /* Standard Fluent Radius */
+            --fluent-control-height: 32px;
+            
+            /* Elevation (Depths) */
+            --fluent-depth-4: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+            --fluent-depth-16: 0 6.4px 14.4px 0 rgba(0,0,0,0.132), 0 1.2px 3.6px 0 rgba(0,0,0,0.108);
         }
 
-        /* --- RESET & BASE --- */
+        /* --- GLOBAL RESET --- */
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
-            font-family: var(--font-family);
+            background-color: var(--fluent-color-neutral-lighter);
+            font-family: var(--fluent-font-family);
+            color: var(--fluent-color-neutral-dark);
+            font-size: var(--fluent-font-size-base);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- COMPONENT: TOP APP BAR (CenterAligned) --- */
-        .top-app-bar {
-            height: 64px;
+        /* --- HEADER / COMMAND BAR --- */
+        .fluent-header {
+            height: 48px;
+            background-color: var(--fluent-color-white);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
-            background-color: var(--md-sys-color-surface); /* Surface blend */
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            box-shadow: var(--fluent-depth-4);
+            z-index: 100;
         }
 
-        .headline-title {
-            font-size: 22px;
-            font-weight: 400; /* Regular */
-            color: var(--md-sys-color-on-surface);
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        /* Avatar / User Action */
-        .user-action {
+        .fluent-brand {
+            font-size: 16px;
+            font-weight: var(--fluent-font-weight-semibold);
+            color: var(--fluent-color-brand);
             display: flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
-            padding: 4px 8px 4px 4px;
-            border-radius: var(--md-sys-shape-corner-full);
-            transition: background-color 0.2s;
-        }
-        
-        .user-action:active {
-            background-color: var(--md-sys-color-secondary-container);
         }
 
-        .avatar {
+        /* Info Button (Replaces Profile Chip) */
+        .fluent-icon-button {
+            background: transparent;
+            border: none;
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 500;
-            font-size: 14px;
+            cursor: pointer;
+            color: var(--fluent-color-neutral-secondary);
+            border-radius: var(--fluent-border-radius);
+        }
+        .fluent-icon-button:hover {
+            background-color: var(--fluent-color-neutral-light);
+            color: var(--fluent-color-neutral-dark);
         }
 
-        .user-name-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--md-sys-color-on-surface);
-            display: none; /* Oculto en móviles muy pequeños */
-        }
-        @media (min-width: 360px) { .user-name-label { display: block; } }
-
-        /* --- COMPONENT: SCAFFOLD BODY --- */
-        .scaffold-content {
+        /* --- MAIN LAYOUT --- */
+        .fluent-main {
             padding: 24px 16px;
             max-width: 480px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        /* --- COMPONENT: TEXT FIELD (Filled) --- */
-        .text-field-container {
-            position: relative;
-            background-color: var(--md-sys-color-surface-container-high);
-            border-radius: var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large) 0 0;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            transition: background-color 0.2s;
-        }
-
-        /* Estado activo simula el indicador de Compose */
-        .text-field-container::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background-color: var(--md-sys-color-primary);
-            transition: width 0.3s ease;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .text-field-container:focus-within::after {
-            width: 100%;
-        }
-
-        .leading-icon {
-            padding-left: 12px;
-            color: var(--md-sys-color-on-surface);
-            opacity: 0.6;
-        }
-
-        .text-field-input {
             flex-grow: 1;
-            border: none;
-            background: none;
-            height: 100%;
-            padding: 24px 16px 8px 12px; /* Espacio para label flotante */
-            font-family: var(--font-family);
-            font-size: 16px;
-            color: var(--md-sys-color-on-surface);
-            outline: none;
-            caret-color: var(--md-sys-color-primary);
         }
 
-        .floating-label {
-            position: absolute;
-            left: 48px; /* 12px padding + 24px icon + 12px gap */
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--md-sys-color-secondary);
-            font-size: 16px;
-            pointer-events: none;
-            transition: 0.2s cubic-bezier(0.2, 0, 0, 1);
-        }
-
-        /* Animación Label */
-        .text-field-input:focus ~ .floating-label,
-        .text-field-input:not(:placeholder-shown) ~ .floating-label {
-            top: 14px;
-            font-size: 12px;
-            color: var(--md-sys-color-primary);
-        }
-
-        select.text-field-input {
-            appearance: none; /* Eliminar flecha nativa */
-            padding-top: 24px;
-        }
-
-        /* --- COMPONENT: ELEVATED CARD (Resultados) --- */
-        .result-card {
-            background-color: var(--md-sys-color-surface-container-low);
-            border-radius: var(--md-sys-shape-corner-extra-large);
-            padding: 24px;
+        /* --- FLUENT FIELD (Label + Input) --- */
+        .fluent-field {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            /* Elevación Level 1 */
-            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            margin-bottom: 16px;
         }
 
-        .card-header {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--md-sys-color-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .fluent-label {
+            font-weight: var(--fluent-font-weight-semibold);
+            color: var(--fluent-color-neutral-primary);
+            margin-bottom: 6px;
+            display: block;
         }
 
-        .row {
+        /* Input Styles */
+        .fluent-input, .fluent-dropdown {
+            height: var(--fluent-control-height);
+            border: 1px solid #8A8886; /* Rest state */
+            border-radius: var(--fluent-border-radius);
+            padding: 0 12px;
+            font-family: inherit;
+            font-size: var(--fluent-font-size-base);
+            color: var(--fluent-color-neutral-dark);
+            background-color: var(--fluent-color-white);
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.1s;
+        }
+
+        /* Hover State */
+        .fluent-input:hover, .fluent-dropdown:hover {
+            border-color: #323130;
+        }
+
+        /* Focus State */
+        .fluent-input:focus, .fluent-dropdown:focus {
+            border-color: var(--fluent-color-brand);
+            border-bottom-width: 2px; /* Fluent signature focus */
+        }
+
+        /* Dropdown specific */
+        .fluent-dropdown {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23605E5C%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 32px;
+        }
+
+        /* --- CARD (Results) --- */
+        .fluent-card {
+            background-color: var(--fluent-color-white);
+            border: 1px solid var(--fluent-color-neutral-light);
+            border-radius: var(--fluent-border-radius);
+            padding: 20px;
+            box-shadow: var(--fluent-depth-4);
+            margin-top: 24px;
+        }
+
+        .fluent-card-header {
+            font-size: 16px;
+            font-weight: var(--fluent-font-weight-semibold);
+            color: var(--fluent-color-neutral-primary);
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--fluent-color-neutral-light);
+            padding-bottom: 12px;
+        }
+
+        .fluent-list-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--fluent-color-neutral-secondary);
+        }
+
+        .fluent-list-item.total {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--fluent-color-neutral-light);
+            color: var(--fluent-color-brand);
+            font-weight: var(--fluent-font-weight-semibold);
+            font-size: 18px;
         }
         
-        .label-text { font-size: 14px; color: var(--md-sys-color-secondary); }
-        .value-text { font-size: 16px; color: var(--md-sys-color-on-surface); font-weight: 500; }
-
-        .divider {
-            height: 1px;
-            background-color: var(--md-sys-color-outline-variant);
-            margin: 4px 0;
+        .fluent-value {
+            color: var(--fluent-color-neutral-dark);
+            font-weight: var(--fluent-font-weight-semibold);
         }
 
-        .total-value {
-            font-size: 24px;
-            color: var(--md-sys-color-primary);
-            font-weight: 600;
+        /* --- FOOTER --- */
+        .fluent-footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--fluent-color-neutral-tertiary);
+            font-size: 12px;
+            margin-top: auto;
         }
 
-        /* --- COMPONENT: ALERT DIALOG (Compose Style) --- */
+        /* --- DIALOG --- */
         dialog {
             border: none;
-            border-radius: 28px;
-            background-color: var(--md-sys-color-surface-container-high);
+            border-radius: var(--fluent-border-radius);
+            box-shadow: var(--fluent-depth-16);
             padding: 24px;
-            max-width: 312px;
             width: 100%;
-            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-            color: var(--md-sys-color-on-surface);
+            max-width: 320px;
+            background: var(--fluent-color-white);
         }
-        
+
         dialog::backdrop {
-            background-color: rgba(0, 0, 0, 0.32); /* Scrim color */
+            background-color: rgba(255, 255, 255, 0.7); /* Fluent uses light backdrop usually */
         }
 
         .dialog-title {
-            font-size: 24px;
-            margin: 0 0 16px 0;
-            font-weight: 400;
+            font-size: 20px;
+            font-weight: var(--fluent-font-weight-semibold);
+            margin: 0 0 12px 0;
+            color: var(--fluent-color-neutral-primary);
         }
-        
-        .dialog-body {
+
+        .dialog-content {
             font-size: 14px;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--fluent-color-neutral-secondary);
             margin-bottom: 24px;
-            line-height: 20px;
+            line-height: 1.5;
         }
 
-        .dialog-btn {
-            float: right;
-            background: none;
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .fluent-button {
+            background-color: var(--fluent-color-brand);
+            color: white;
             border: none;
-            color: var(--md-sys-color-primary);
-            font-weight: 500;
-            padding: 10px 12px;
-            border-radius: 20px;
+            padding: 6px 20px;
+            border-radius: var(--fluent-border-radius);
+            font-weight: var(--fluent-font-weight-semibold);
+            font-size: 14px;
             cursor: pointer;
-            font-family: var(--font-family);
+            min-width: 80px;
         }
-        .dialog-btn:hover { background-color: rgba(0, 97, 164, 0.08); }
+        .fluent-button:hover {
+            background-color: var(--fluent-color-brand-hover);
+        }
 
-        /* Utilidad */
+        /* --- UTILITY --- */
         .hidden { display: none !important; }
+        .icon-symbol { font-family: 'Material Symbols Regular'; font-weight: normal; font-style: normal; font-size: 20px; display: inline-block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; }
     </style>
 </head>
 <body>
 
-    <header class="top-app-bar">
-        <div style="width: 48px;"></div> <h1 class="headline-title">Seguridad Social</h1>
-        
-        <div class="user-action" id="profileTrigger">
-            <div class="avatar">JC</div>
-            <span class="user-name-label">Jonathan Coral</span>
+    <header class="fluent-header">
+        <div class="fluent-brand">
+            <span class="icon-symbol" style="color:var(--fluent-color-brand);">shield_person</span>
+            <span>Seguridad Social 2026</span>
         </div>
+        <button id="profileTrigger" class="fluent-icon-button" aria-label="Información">
+            <span class="icon-symbol">info</span>
+        </button>
     </header>
 
-    <main class="scaffold-content">
-
-        <div class="text-field-container">
-            <span class="material-symbols-rounded leading-icon">attach_money</span>
-            <input type="number" id="pago" class="text-field-input" placeholder=" " inputmode="numeric" autofocus>
-            <label class="floating-label">Ingreso base mensual</label>
+    <main class="fluent-main">
+        
+        <div class="fluent-field">
+            <label for="pago" class="fluent-label">Ingreso base mensual</label>
+            <input type="number" id="pago" class="fluent-input" inputmode="numeric" autofocus>
         </div>
 
-        <div class="text-field-container">
-            <span class="material-symbols-rounded leading-icon">tune</span>
-            <select id="metodo" class="text-field-input">
-                <option value="1">Ingresar días manualmente</option>
-                <option value="2">Calcular por fechas</option>
+        <div class="fluent-field">
+            <label for="metodo" class="fluent-label">Método de cálculo</label>
+            <select id="metodo" class="fluent-dropdown">
+                <option value="1">Ingresar días directamente</option>
+                <option value="2">Calcular rango de fechas</option>
             </select>
-            <label class="floating-label">Método de cálculo</label>
         </div>
 
-        <div id="group-dias" class="text-field-container">
-            <span class="material-symbols-rounded leading-icon">123</span>
-            <input type="number" id="dias" class="text-field-input" placeholder=" " inputmode="numeric">
-            <label class="floating-label">Días trabajados</label>
+        <div id="group-dias" class="fluent-field">
+            <label for="dias" class="fluent-label">Días trabajados</label>
+            <input type="number" id="dias" class="fluent-input" inputmode="numeric">
         </div>
 
-        <div id="group-fechas" class="hidden" style="display: flex; flex-direction: column; gap: 24px;">
-            <div class="text-field-container">
-                <span class="material-symbols-rounded leading-icon">date_range</span>
-                <input type="date" id="fecha1" class="text-field-input" placeholder=" ">
-                <label class="floating-label" style="top: 14px; font-size: 12px; color: var(--md-sys-color-primary);">Fecha inicial</label>
+        <div id="group-fechas" class="hidden">
+            <div class="fluent-field">
+                <label for="fecha1" class="fluent-label">Fecha inicial</label>
+                <input type="date" id="fecha1" class="fluent-input">
             </div>
-            <div class="text-field-container">
-                <span class="material-symbols-rounded leading-icon">event</span>
-                <input type="date" id="fecha2" class="text-field-input" placeholder=" ">
-                <label class="floating-label" style="top: 14px; font-size: 12px; color: var(--md-sys-color-primary);">Fecha final</label>
+            <div class="fluent-field">
+                <label for="fecha2" class="fluent-label">Fecha final</label>
+                <input type="date" id="fecha2" class="fluent-input">
             </div>
         </div>
 
-        <div class="result-card">
-            <span class="card-header">Liquidación Estimada</span>
+        <div class="fluent-card">
+            <div class="fluent-card-header">Detalle de Liquidación</div>
             
-            <div class="row">
-                <span class="label-text">IBC Calculado</span>
-                <span class="value-text" id="out-ibc">$0</span>
+            <div class="fluent-list-item">
+                <span>IBC Base</span>
+                <span class="fluent-value" id="out-ibc">$0</span>
             </div>
-            <div class="row">
-                <span class="label-text">Días liquidados</span>
-                <span class="value-text" id="out-dias">0</span>
+            <div class="fluent-list-item">
+                <span>Días</span>
+                <span class="fluent-value" id="out-dias">0</span>
+            </div>
+            <div class="fluent-list-item">
+                <span>Salud (12.5%)</span>
+                <span class="fluent-value" id="out-salud">$0</span>
+            </div>
+            <div class="fluent-list-item">
+                <span>Pensión (16.0%)</span>
+                <span class="fluent-value" id="out-pension">$0</span>
             </div>
             
-            <div class="divider"></div>
-
-            <div class="row">
-                <span class="label-text">Salud (12.5%)</span>
-                <span class="value-text" id="out-salud">$0</span>
-            </div>
-            <div class="row">
-                <span class="label-text">Pensión (16.0%)</span>
-                <span class="value-text" id="out-pension">$0</span>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="row">
-                <span class="label-text" style="font-weight: 500; color: var(--md-sys-color-on-surface);">Total a Pagar</span>
-                <span class="total-value" id="out-total">$0</span>
+            <div class="fluent-list-item total">
+                <span>Total a Pagar</span>
+                <span id="out-total">$0</span>
             </div>
         </div>
 
     </main>
 
+    <footer class="fluent-footer">
+        Desarrollado por <strong>Jonathan Coral</strong>
+    </footer>
+
     <dialog id="creditosDialog">
         <h2 class="dialog-title">Acerca de</h2>
-        <div class="dialog-body">
-            <p><strong>Desarrollado por:</strong><br>Jonathan Coral</p>
-            <p style="margin-top: 12px;"><strong>Contacto:</strong><br>jonathancoral@unicomfacauca.edu.co</p>
-            <p style="margin-top: 12px; font-size: 12px;">Versión 2.0 (Material 3 Expressive)</p>
+        <div class="dialog-content">
+            <p><strong>Jonathan Coral</strong></p>
+            <p>jonathancoral@unicomfacauca.edu.co</p>
+            <p style="margin-top:12px; font-size:12px; color:var(--fluent-color-neutral-tertiary);">Versión Fluent UI Web</p>
         </div>
-        <button class="dialog-btn" id="btnClose">Entendido</button>
+        <div class="dialog-actions">
+            <button id="btnClose" class="fluent-button">Cerrar</button>
+        </div>
     </dialog>
 
     <script>
         // --- Lógica de Negocio (Backend en Frontend) ---
         const SMMLV_2026 = 1750905;
 
-        // Referencias DOM
+        // Referencias DOM (Mapeadas a los nuevos elementos HTML que conservan los IDs originales)
         const ui = {
             pago: document.getElementById('pago'),
             metodo: document.getElementById('metodo'),
@@ -413,7 +386,7 @@
             if (metodoVal === '1') {
                 diasCalc = parseInt(ui.dias.value) || 0;
             } else {
-                const f1 = new Date(ui.fecha1.value + 'T00:00:00'); // Fix zona horaria simple
+                const f1 = new Date(ui.fecha1.value + 'T00:00:00'); 
                 const f2 = new Date(ui.fecha2.value + 'T00:00:00');
                 if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) {
                     const diffTime = Math.abs(f2 - f1);
@@ -421,22 +394,20 @@
                 }
             }
 
-            // Validaciones mínimas visuales
             if (pagoVal <= 0 || diasCalc <= 0) {
                 ui.outTotal.innerText = "$0";
                 return;
             }
 
-            // 2. Cálculo IBC (Lógica Original Batch)
+            // 2. Cálculo IBC
             let ibc = (pagoVal * 40) / 100;
             if (ibc < SMMLV_2026) ibc = SMMLV_2026;
 
             // 3. Factores diarios
-            // Batch original: (ibc * 125) / (1000 * 30) -> ibc * 0.125 / 30
             const saludDia = (ibc * 0.125) / 30;
             const pensionDia = (ibc * 0.16) / 30;
 
-            // 4. Totales y Redondeo (Batch logic: redondear a la centena superior si hay residuo)
+            // 4. Totales y Redondeo
             const redondearCentena = (val) => {
                 let entero = Math.floor(val);
                 if (entero % 100 !== 0) {
@@ -465,37 +436,32 @@
         // Event Listener: Cambio de Método
         ui.metodo.addEventListener('change', () => {
             if (ui.metodo.value === '1') {
-                ui.groupDias.classList.remove('hidden'); // Clases utilitarias CSS
-                ui.groupDias.style.display = 'flex';
+                ui.groupDias.classList.remove('hidden');
                 ui.groupFechas.classList.add('hidden');
-                ui.groupFechas.style.display = 'none';
                 setTimeout(() => ui.dias.focus(), 50);
             } else {
                 ui.groupDias.classList.add('hidden');
-                ui.groupDias.style.display = 'none';
                 ui.groupFechas.classList.remove('hidden');
-                ui.groupFechas.style.display = 'flex'; // Restaurar flex container
                 setTimeout(() => ui.fecha1.focus(), 50);
             }
             calcular();
         });
 
-        // Lógica: Enter Key Navigation (Comportamiento IME Action Next)
+        // Lógica: Enter Key Navigation
         const inputsOrder = ['pago', 'metodo', 'dias', 'fecha1', 'fecha2'];
         inputsOrder.forEach((id, idx) => {
             const el = document.getElementById(id);
             el.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    // Lógica para saltar inputs ocultos
                     let nextIdx = idx + 1;
-                    if (id === 'metodo' && ui.metodo.value === '2') nextIdx = 3; // Saltar a fecha1
-                    if (id === 'metodo' && ui.metodo.value === '1') nextIdx = 2; // Ir a dias
+                    if (id === 'metodo' && ui.metodo.value === '2') nextIdx = 3; 
+                    if (id === 'metodo' && ui.metodo.value === '1') nextIdx = 2; 
                     
                     if (inputsOrder[nextIdx]) {
                         document.getElementById(inputsOrder[nextIdx]).focus();
                     } else {
-                        el.blur(); // Cerrar teclado al finalizar
+                        el.blur();
                     }
                 }
             });
@@ -504,7 +470,7 @@
         // Lógica: Diálogo
         ui.profileTrigger.addEventListener('click', () => ui.dialog.showModal());
         ui.btnClose.addEventListener('click', () => ui.dialog.close());
-        ui.dialog.addEventListener('click', (e) => { // Backdrop click
+        ui.dialog.addEventListener('click', (e) => { 
             const rect = ui.dialog.getBoundingClientRect();
             if (e.clientX < rect.left || e.clientX > rect.right || 
                 e.clientY < rect.top || e.clientY > rect.bottom) {
@@ -512,7 +478,6 @@
             }
         });
 
-        // Registro Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
