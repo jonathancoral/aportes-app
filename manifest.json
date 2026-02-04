@@ -1,13 +1,20 @@
 {
   "name": "Seguridad Social 2026",
-  "short_name": "SegSocial",
-  "start_url": ".",
+  "short_name": "SegSocial Coral",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FEF7FF",
-  "theme_color": "#6750A4",
+  "background_color": "#FAFDFCA",
+  "theme_color": "#006A6A",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2845/2845869.png",
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
