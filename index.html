@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#F9F9FF">
-    <title>Seguridad Social</title>
+    <title>Calculadora de Aportes</title>
     
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon-192.png">
@@ -15,11 +15,10 @@
 
     <style>
         :root {
-            /* Motion: Emphasized Easing (Android 16) */
             --motion-emphasized: cubic-bezier(0.2, 0.0, 0, 1.0);
             --duration-medium: 400ms;
 
-            /* Paleta M3 Expressive (Cobalt) */
+            /* M3 Expressive Tokens */
             --md-sys-color-primary: #3949AB;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #DEE0FF;
@@ -55,27 +54,24 @@
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            transition: background-color var(--duration-medium) var(--motion-emphasized);
-            padding-bottom: env(safe-area-inset-bottom);
+            transition: background-color var(--duration-medium);
         }
 
         /* Top Bar */
         .top-app-bar {
-            height: 64px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--md-sys-color-surface);
             padding-top: env(safe-area-inset-top);
         }
 
         .top-app-bar h1 {
-            font-size: 22px;
-            font-weight: 400;
+            font-size: clamp(22px, 5vw, 26px);
+            font-weight: 500;
             margin: 0;
         }
 
-        /* Scaffold */
         .scaffold-body {
             flex: 1;
             padding: 16px 24px 100px 24px;
@@ -84,95 +80,106 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
-        /* Inputs Minimalistas (Sin Iconos) */
+        /* Segmented Buttons (Nuevo componente) */
+        .segmented-button {
+            display: flex;
+            width: 100%;
+            height: 48px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-extra-large);
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        .segment-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s var(--motion-emphasized);
+            border-right: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .segment-item:last-child { border-right: none; }
+
+        .segment-item.active {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        /* Inputs (Limpieza de líneas) */
+        .md-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .md-label-static {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            margin-left: 16px;
+        }
+
         .md-text-field {
             position: relative;
             background-color: var(--md-sys-color-surface-container-high);
-            border-radius: var(--md-sys-shape-extra-large);
+            border-radius: 20px;
             height: 64px;
             display: flex;
-            flex-direction: column;
             padding: 0 20px;
-            transition: background-color 0.2s;
-            cursor: text;
+            transition: transform 0.1s;
         }
-
-        .md-text-field::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 20px; right: 20px;
-            height: 1px;
-            background-color: var(--md-sys-color-outline-variant);
-        }
-
-        .md-text-field:focus-within::after {
-            height: 2px;
-            background-color: var(--md-sys-color-primary);
+        
+        .md-text-field:focus-within {
+            outline: 2px solid var(--md-sys-color-primary);
         }
 
         .md-text-field input {
             width: 100%;
-            height: 100%;
             border: none;
             background: transparent;
             outline: none;
             font-family: inherit;
-            font-size: 17px;
+            font-size: 18px; /* Texto más grande */
             color: var(--md-sys-color-on-surface);
-            padding-top: 20px;
         }
 
-        .md-label {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: var(--md-sys-color-outline);
-            pointer-events: none;
-            transition: all 200ms var(--motion-emphasized);
-            transform-origin: left top;
-        }
-
-        .md-text-field:focus-within .md-label,
-        .md-text-field input:not(:placeholder-shown) + .md-label {
-            top: 10px;
-            transform: translateY(0) scale(0.75);
-            color: var(--md-sys-color-primary);
-            font-weight: 600;
-        }
-
-        /* Card de Resultados */
+        /* Card Resultados */
         .md-card {
             background-color: var(--md-sys-color-surface-container);
             border-radius: var(--md-sys-shape-extra-large);
             padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         .card-row { display: flex; justify-content: space-between; align-items: center; }
-        .row-label { font-size: 14px; opacity: 0.7; }
-        .row-value { font-size: 16px; font-weight: 500; }
+        .row-label { font-size: 15px; font-weight: 400; opacity: 0.8; }
+        .row-value { font-size: 17px; font-weight: 600; }
 
         .total-pill {
             background-color: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
-            padding: 16px 20px;
-            border-radius: 20px;
-            margin-top: 10px;
+            padding: 20px;
+            border-radius: 24px;
+            margin-top: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .total-value { font-size: 24px; font-weight: 700; }
+        .total-value { font-size: 26px; font-weight: 700; }
 
-        /* Navigation Bar */
+        /* Nav Bar */
         .nav-bar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -208,85 +215,68 @@
         .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
         .nav-label { font-size: 12px; font-weight: 500; }
 
-        /* Dialog / Sheet */
-        dialog {
-            border: none;
-            border-radius: 28px 28px 0 0;
-            background-color: var(--md-sys-color-surface-container);
-            width: 100%;
-            max-width: 100%;
-            position: fixed;
-            bottom: 0;
-            padding: 24px;
-            transform: translateY(100%);
-            transition: transform 0.4s var(--motion-emphasized);
-            display: block;
-        }
-
-        dialog[open] { transform: translateY(0); }
-        dialog::backdrop { background: rgba(0,0,0,0.4); }
-
-        .menu-item {
-            height: 56px;
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            border-radius: 16px;
-            padding: 0 16px;
-            cursor: pointer;
-        }
-        .menu-item:active { background-color: var(--md-sys-color-primary-container); }
-
         .hidden { display: none !important; }
         .view-section { display: none; }
-        .active-view { display: flex; flex-direction: column; gap: 20px; animation: fadeIn 0.3s; }
+        .active-view { display: flex; flex-direction: column; gap: 24px; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; }}
     </style>
 </head>
 <body>
 
     <header class="top-app-bar">
-        <h1>Seguridad Social</h1>
+        <h1>Calculadora de Aportes</h1>
     </header>
 
     <main class="scaffold-body">
         
         <section id="view-home" class="view-section active-view">
-            <div class="md-text-field">
-                <input type="number" id="pago" placeholder=" " inputmode="numeric">
-                <label class="md-label">Ingreso base mensual</label>
-            </div>
-
-            <div class="md-text-field" id="metodoTrigger" style="cursor:pointer;">
-                <input type="text" id="metodoTexto" value="Ingresar días manualmente" readonly style="cursor:pointer;">
-                <input type="hidden" id="metodoValue" value="1">
-                <label class="md-label">Método de cálculo</label>
-            </div>
-
-            <div id="group-dias" class="md-text-field">
-                <input type="number" id="dias" placeholder=" " inputmode="numeric">
-                <label class="md-label">Días trabajados</label>
-            </div>
-
-            <div id="group-fechas" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
+            
+            <div class="md-field-group">
+                <label class="md-label-static">Ingreso mensual</label>
                 <div class="md-text-field">
-                    <input type="date" id="fecha1">
-                    <label class="md-label" style="top:10px; transform:scale(0.75);">Fecha inicial</label>
+                    <input type="number" id="pago" placeholder="Ej. 2000000" inputmode="numeric">
                 </div>
+            </div>
+
+            <div class="md-field-group">
+                <label class="md-label-static">Método de liquidación</label>
+                <div class="segmented-button">
+                    <div class="segment-item active" id="btn-manual" onclick="toggleMetodo('1')">Por Días</div>
+                    <div class="segment-item" id="btn-fecha" onclick="toggleMetodo('2')">Por Fechas</div>
+                </div>
+                <input type="hidden" id="metodoValue" value="1">
+            </div>
+
+            <div id="group-dias" class="md-field-group">
+                <label class="md-label-static">Días trabajados</label>
                 <div class="md-text-field">
-                    <input type="date" id="fecha2">
-                    <label class="md-label" style="top:10px; transform:scale(0.75);">Fecha final</label>
+                    <input type="number" id="dias" placeholder="30" inputmode="numeric">
+                </div>
+            </div>
+
+            <div id="group-fechas" class="hidden" style="display:flex; flex-direction:column; gap:16px;">
+                <div class="md-field-group">
+                    <label class="md-label-static">Desde</label>
+                    <div class="md-text-field">
+                        <input type="date" id="fecha1">
+                    </div>
+                </div>
+                <div class="md-field-group">
+                    <label class="md-label-static">Hasta</label>
+                    <div class="md-text-field">
+                        <input type="date" id="fecha2">
+                    </div>
                 </div>
             </div>
 
             <div class="md-card">
                 <div class="card-row">
-                    <span class="row-label">IBC Base</span>
+                    <span class="row-label">Base IBC</span>
                     <span class="row-value" id="out-ibc">$0</span>
                 </div>
                 <div class="card-row">
-                    <span class="row-label">Días liquidados</span>
-                    <span class="row-value" id="out-dias">0</span>
+                    <span class="row-label">Tiempo liquidado</span>
+                    <span class="row-value" id="out-dias">0 días</span>
                 </div>
                 <div class="card-row">
                     <span class="row-label">Salud (12.5%)</span>
@@ -297,7 +287,7 @@
                     <span class="row-value" id="out-pension">$0</span>
                 </div>
                 <div class="total-pill">
-                    <span style="font-weight:500;">Total a Pagar</span>
+                    <span style="font-weight:600; font-size:18px;">Total Aportes</span>
                     <span class="total-value" id="out-total">$0</span>
                 </div>
             </div>
@@ -306,13 +296,13 @@
         <section id="view-settings" class="view-section">
             <div class="md-card">
                 <h2 style="margin:0 0 16px 0; font-size:18px;">Personalización</h2>
-                <div class="menu-item" id="themeBtn" style="justify-content:space-between;">
+                <div class="card-row" id="themeBtn" style="cursor:pointer; padding:8px 0;">
                     <span>Tema Oscuro</span>
                     <span class="material-symbols-rounded">contrast</span>
                 </div>
                 <div style="height:1px; background:var(--md-sys-color-outline-variant); margin:12px 0;"></div>
-                <p style="margin:0; font-size:14px; color:var(--md-sys-color-outline);">Jonathan Coral</p>
-                <p style="margin:4px 0 0 0; font-size:12px; opacity:0.7;">jonathancoral@unicomfacauca.edu.co</p>
+                <p style="margin:0; font-size:15px; font-weight:600;">Jonathan Coral</p>
+                <p style="margin:4px 0 0 0; font-size:13px; opacity:0.7;">jonathancoral@unicomfacauca.edu.co</p>
             </div>
         </section>
 
@@ -329,12 +319,6 @@
         </div>
     </nav>
 
-    <dialog id="sheet">
-        <div style="width:32px; height:4px; background:#ccc; border-radius:2px; margin:0 auto 20px;"></div>
-        <div class="menu-item" onclick="selMetodo('1', 'Ingresar días manualmente')">Días manualmente</div>
-        <div class="menu-item" onclick="selMetodo('2', 'Calcular rango de fechas')">Rango de fechas</div>
-    </dialog>
-
     <script>
         const SMMLV = 1750905;
         const ui = {
@@ -346,8 +330,7 @@
             outDias: document.getElementById('out-dias'),
             outSalud: document.getElementById('out-salud'),
             outPension: document.getElementById('out-pension'),
-            outTotal: document.getElementById('out-total'),
-            sheet: document.getElementById('sheet')
+            outTotal: document.getElementById('out-total')
         };
 
         const format = (n) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
@@ -373,24 +356,22 @@
             const tS = rnd(sD * d), tP = rnd(pD * d), total = rnd(tS + tP);
 
             ui.outIbc.textContent = format(ibc);
-            ui.outDias.textContent = d;
+            ui.outDias.textContent = d + " días";
             ui.outSalud.textContent = format(tS);
             ui.outPension.textContent = format(tP);
             ui.outTotal.textContent = format(total);
         }
 
-        function resetUI() { ui.outTotal.textContent = "$0"; }
+        function resetUI() { ui.outTotal.textContent = "$0"; ui.outIbc.textContent = "$0"; ui.outDias.textContent = "0 días"; }
 
-        function selMetodo(v, t) {
+        function toggleMetodo(v) {
             document.getElementById('metodoValue').value = v;
-            document.getElementById('metodoTexto').value = t;
+            document.getElementById('btn-manual').classList.toggle('active', v === '1');
+            document.getElementById('btn-fecha').classList.toggle('active', v === '2');
             document.getElementById('group-dias').classList.toggle('hidden', v === '2');
             document.getElementById('group-fechas').classList.toggle('hidden', v === '1');
-            ui.sheet.close(); calcular();
+            calcular();
         }
-
-        document.getElementById('metodoTrigger').onclick = () => ui.sheet.showModal();
-        ui.sheet.onclick = (e) => { if (e.clientY < ui.sheet.getBoundingClientRect().top) ui.sheet.close(); };
 
         ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => document.getElementById(id).oninput = calcular);
 
@@ -404,8 +385,7 @@
         });
 
         document.getElementById('themeBtn').onclick = () => {
-            const isDark = document.body.hasAttribute('data-theme');
-            isDark ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
+            document.body.hasAttribute('data-theme') ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
         };
     </script>
 </body>
