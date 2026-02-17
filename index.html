@@ -12,7 +12,6 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,GRAD@8..144,300..700,-50..150&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,0" rel="stylesheet" />
 
     <style>
         :root {
@@ -29,18 +28,14 @@
             --md-sys-shape-extra-large: 28px;
         }
 
-        [data-theme="dark"] {
-            --md-sys-color-primary: #BAC3FF;
-            --md-sys-color-on-primary: #001F60;
-            --md-sys-color-primary-container: #203190;
-            --md-sys-color-on-primary-container: #DEE0FF;
-            --md-sys-color-surface: #121318;
-            --md-sys-color-on-surface: #E4E1E6;
-            --md-sys-color-surface-container: #1E1F25;
-            --md-sys-color-surface-container-high: #2A2B32;
+        /* Ocultar barra de desplazamiento globalmente */
+        * {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
         }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        *::-webkit-scrollbar {
+            display: none; /* Chrome/Safari/Edge */
+        }
 
         body {
             margin: 0;
@@ -50,6 +45,7 @@
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         .top-app-bar {
@@ -68,32 +64,43 @@
 
         .scaffold-body {
             flex: 1;
-            padding: 8px 24px 120px 24px;
+            padding: 8px 24px 40px 24px;
             max-width: 500px;
             margin: 0 auto;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 24px;
         }
 
-        .md-field-group { display: flex; flex-direction: column; gap: 10px; }
+        .md-field-group { display: flex; flex-direction: column; gap: 8px; }
         .md-label-static { font-size: 14px; font-weight: 600; color: var(--md-sys-color-primary); margin-left: 8px; }
 
         .md-text-field {
             background-color: var(--md-sys-color-surface-container-high);
-            border-radius: 24px;
+            border-radius: 20px;
             height: 64px;
             display: flex;
-            padding: 0 24px;
+            padding: 0 20px;
             border: 2px solid transparent;
+            transition: all 0.2s;
         }
         
-        .md-text-field:focus-within { border-color: var(--md-sys-color-primary); background-color: var(--md-sys-color-surface); }
+        .md-text-field:focus-within {
+            border-color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-surface);
+        }
 
         .md-text-field input {
             width: 100%; border: none; background: transparent; outline: none;
             font-family: inherit; font-size: 18px; color: var(--md-sys-color-on-surface);
+        }
+
+        /* Eliminar flechas en inputs numéricos */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         .segmented-button {
@@ -106,39 +113,29 @@
         .segment-item {
             flex: 1; display: flex; align-items: center; justify-content: center;
             font-size: 15px; font-weight: 600; cursor: pointer;
-            color: var(--md-sys-color-on-surface);
             border-right: 1px solid var(--md-sys-color-outline);
         }
 
         .segment-item:last-child { border-right: none; }
         .segment-item.active { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
 
-        .md-card { background-color: var(--md-sys-color-surface-container); border-radius: var(--md-sys-shape-extra-large); padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+        .md-card { background-color: var(--md-sys-color-surface-container); border-radius: var(--md-sys-shape-extra-large); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
         .card-row { display: flex; justify-content: space-between; align-items: center; }
         .row-label { font-size: 15px; opacity: 0.7; }
         .row-value { font-size: 17px; font-weight: 600; }
 
-        .total-pill { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 24px; border-radius: 28px; display: flex; justify-content: space-between; align-items: center; }
-        .total-value { font-size: 28px; font-weight: 700; }
+        .total-pill { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 20px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .total-value { font-size: 26px; font-weight: 700; }
 
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 84px;
-            background-color: var(--md-sys-color-surface-container);
-            display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
-            z-index: 1000;
-            box-shadow: 0px -1px 4px rgba(0,0,0,0.05);
+        .fluent-footer {
+            text-align: center;
+            padding: 32px 24px;
+            color: var(--md-sys-color-outline);
+            font-size: 13px;
+            line-height: 1.6;
         }
 
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; color: var(--md-sys-color-on-surface-variant); flex: 1; }
-        .nav-pill { width: 64px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s; }
-        .nav-item.active .nav-pill { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
-        .nav-label { font-size: 12px; font-weight: 600; }
-
         .hidden { display: none !important; }
-        .view-section { display: none; }
-        .active-view { display: flex; flex-direction: column; gap: 28px; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
     </style>
 </head>
 <body>
@@ -149,75 +146,56 @@
 
     <main class="scaffold-body">
         
-        <section id="view-home" class="view-section active-view">
+        <div class="md-field-group">
+            <label class="md-label-static">Ingreso mensual</label>
+            <div class="md-text-field">
+                <input type="text" id="pago" placeholder="$ 0" inputmode="numeric">
+            </div>
+        </div>
+
+        <div class="md-field-group">
+            <label class="md-label-static">Método de liquidación</label>
+            <div class="segmented-button">
+                <div class="segment-item active" id="btn-manual" onclick="toggleMetodo('1')">Por Días</div>
+                <div class="segment-item" id="btn-fecha" onclick="toggleMetodo('2')">Por Fechas</div>
+            </div>
+            <input type="hidden" id="metodoValue" value="1">
+        </div>
+
+        <div id="group-dias" class="md-field-group">
+            <label class="md-label-static">Días trabajados</label>
+            <div class="md-text-field">
+                <input type="number" id="dias" placeholder="30" inputmode="numeric">
+            </div>
+        </div>
+
+        <div id="group-fechas" class="hidden" style="display:flex; flex-direction:column; gap:16px;">
             <div class="md-field-group">
-                <label class="md-label-static">Ingreso mensual</label>
-                <div class="md-text-field">
-                    <input type="number" id="pago" placeholder="Ej. 2.000.000" inputmode="numeric">
-                </div>
+                <label class="md-label-static">Desde</label>
+                <div class="md-text-field"><input type="date" id="fecha1"></div>
             </div>
-
             <div class="md-field-group">
-                <label class="md-label-static">Método de liquidación</label>
-                <div class="segmented-button">
-                    <div class="segment-item active" id="btn-manual" onclick="toggleMetodo('1')">Por Días</div>
-                    <div class="segment-item" id="id-btn-fecha" onclick="toggleMetodo('2')">Por Fechas</div>
-                </div>
-                <input type="hidden" id="metodoValue" value="1">
+                <label class="md-label-static">Hasta</label>
+                <div class="md-text-field"><input type="date" id="fecha2"></div>
             </div>
+        </div>
 
-            <div id="group-dias" class="md-field-group">
-                <label class="md-label-static">Días trabajados</label>
-                <div class="md-text-field">
-                    <input type="number" id="dias" placeholder="30" inputmode="numeric">
-                </div>
+        <div class="md-card">
+            <div class="card-row"><span class="row-label">Base IBC</span><span class="row-value" id="out-ibc">$ 0</span></div>
+            <div class="card-row"><span class="row-label">Tiempo liquidado</span><span class="row-value" id="out-dias">0 días</span></div>
+            <div class="card-row"><span class="row-label">Salud (12.5%)</span><span class="row-value" id="out-salud">$ 0</span></div>
+            <div class="card-row"><span class="row-label">Pensión (16.0%)</span><span class="row-value" id="out-pension">$ 0</span></div>
+            <div class="total-pill">
+                <span style="font-weight:600;">Total Aportes</span>
+                <span class="total-value" id="out-total">$ 0</span>
             </div>
+        </div>
 
-            <div id="group-fechas" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
-                <div class="md-field-group">
-                    <label class="md-label-static">Desde</label>
-                    <div class="md-text-field">
-                        <input type="date" id="fecha1">
-                    </div>
-                </div>
-                <div class="md-field-group">
-                    <label class="md-label-static">Hasta</label>
-                    <div class="md-text-field">
-                        <input type="date" id="fecha2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="md-card">
-                <div class="card-row"><span class="row-label">Base IBC</span><span class="row-value" id="out-ibc">$0</span></div>
-                <div class="card-row"><span class="row-label">Tiempo liquidado</span><span class="row-value" id="out-dias">0 días</span></div>
-                <div class="card-row"><span class="row-label">Salud (12.5%)</span><span class="row-value" id="out-salud">$0</span></div>
-                <div class="card-row"><span class="row-label">Pensión (16.0%)</span><span class="row-value" id="out-pension">$0</span></div>
-                <div class="total-pill">
-                    <span style="font-weight:600; font-size:18px;">Total Aportes</span>
-                    <span class="total-value" id="out-total">$0</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-settings" class="view-section">
-            <div class="md-card">
-                <h2 style="margin:0 0 16px 0; font-size:18px;">Personalización</h2>
-                <div class="card-row" id="themeBtn" style="cursor:pointer; padding:12px 0;">
-                    <span style="font-weight:500;">Tema Oscuro</span>
-                    <span class="material-symbols-rounded">contrast</span>
-                </div>
-                <div style="height:1px; background:var(--md-sys-color-outline-variant); margin:12px 0;"></div>
-                <p style="margin:0; font-size:15px; font-weight:600;">Jonathan Coral</p>
-                <p style="margin:4px 0 0 0; font-size:13px; opacity:0.7;">jonathancoral@unicomfacauca.edu.co</p>
-            </div>
-        </section>
+        <footer class="fluent-footer">
+            Desarrollado por <strong>Jonathan Coral</strong><br>
+            jonathancoral@unicomfacauca.edu.co
+        </footer>
     </main>
-
-    <nav class="nav-bar">
-        <div class="nav-item active" data-target="view-home"><div class="nav-pill"><span class="material-symbols-rounded">calculate</span></div><span class="nav-label">Calcular</span></div>
-        <div class="nav-item" data-target="view-settings"><div class="nav-pill"><span class="material-symbols-rounded">settings</span></div><span class="nav-label">Ajustes</span></div>
-    </nav>
 
     <script>
         const SMMLV = 1750905;
@@ -226,7 +204,7 @@
             dias: document.getElementById('dias'),
             fecha1: document.getElementById('fecha1'),
             fecha2: document.getElementById('fecha2'),
-            metodoValue: document.getElementById('metodoValue'), // Agregado explícitamente
+            metodo: document.getElementById('metodoValue'),
             outIbc: document.getElementById('out-ibc'),
             outDias: document.getElementById('out-dias'),
             outSalud: document.getElementById('out-salud'),
@@ -234,90 +212,79 @@
             outTotal: document.getElementById('out-total')
         };
 
-        const format = (n) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+        // Formateador de moneda
+        const formatter = new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            maximumFractionDigits: 0
+        });
+
+        // Función para limpiar el formato y obtener solo el número
+        function getRawValue(val) {
+            return parseFloat(val.replace(/[^\d]/g, "")) || 0;
+        }
+
+        // Aplicar formato al escribir
+        ui.pago.addEventListener('input', (e) => {
+            let value = getRawValue(e.target.value);
+            if (value === 0) e.target.value = "";
+            else e.target.value = formatter.format(value);
+            calcular();
+        });
 
         function calcular() {
-            const pagoVal = parseFloat(ui.pago.value) || 0;
-            const met = ui.metodoValue.value;
+            const rawPago = getRawValue(ui.pago.value);
+            const met = ui.metodo.value;
             let d = 0;
 
             if (met === '1') {
                 d = parseInt(ui.dias.value) || 0;
             } else {
                 if (ui.fecha1.value && ui.fecha2.value) {
-                    // Limpieza de fechas para evitar problemas de zona horaria
                     const f1 = new Date(ui.fecha1.value + 'T00:00:00');
                     const f2 = new Date(ui.fecha2.value + 'T00:00:00');
-                    
-                    if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) {
-                        d = Math.floor((f2 - f1) / (1000 * 60 * 60 * 24)) + 1;
-                    }
+                    if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) d = Math.floor((f2 - f1) / 864e5) + 1;
                 }
             }
 
-            if (pagoVal <= 0 || d <= 0) {
-                return resetUI();
-            }
+            if (rawPago <= 0 || d <= 0) return resetUI();
 
-            // Lógica exacta del .bat
-            let ibc = Math.max(pagoVal * 0.4, SMMLV);
-            const sD = (ibc * 0.125) / 30;
-            const pD = (ibc * 0.16) / 30;
+            let ibc = Math.max(rawPago * 0.4, SMMLV);
+            const sD = (ibc * 0.125) / 30, pD = (ibc * 0.16) / 30;
+            const rnd = (v) => { let e = Math.floor(v); return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; };
 
-            const rnd = (v) => { 
-                let e = Math.floor(v); 
-                return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; 
-            };
+            const tS = rnd(sD * d), tP = rnd(pD * d), total = rnd(tS + tP);
 
-            const tS = rnd(sD * d);
-            const tP = rnd(pD * d);
-            const total = rnd(tS + tP);
-
-            ui.outIbc.textContent = format(ibc);
+            ui.outIbc.textContent = formatter.format(ibc);
             ui.outDias.textContent = d + " días";
-            ui.outSalud.textContent = format(tS);
-            ui.outPension.textContent = format(tP);
-            ui.outTotal.textContent = format(total);
+            ui.outSalud.textContent = formatter.format(tS);
+            ui.outPension.textContent = formatter.format(tP);
+            ui.outTotal.textContent = formatter.format(total);
         }
 
         function resetUI() { 
-            ui.outTotal.textContent = "$0"; 
-            ui.outIbc.textContent = "$0"; 
+            ui.outTotal.textContent = "$ 0"; 
+            ui.outIbc.textContent = "$ 0"; 
             ui.outDias.textContent = "0 días"; 
-            ui.outSalud.textContent = "$0";
-            ui.outPension.textContent = "$0";
         }
 
         function toggleMetodo(v) {
-            ui.metodoValue.value = v;
+            ui.metodo.value = v;
             document.getElementById('btn-manual').classList.toggle('active', v === '1');
-            document.getElementById('id-btn-fecha').classList.toggle('active', v === '2');
+            document.getElementById('btn-fecha').classList.toggle('active', v === '2');
             document.getElementById('group-dias').classList.toggle('hidden', v === '2');
             document.getElementById('group-fechas').classList.toggle('hidden', v === '1');
-            calcular(); 
+            calcular();
         }
 
-        // Listeners robustos
-        ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => {
-            const el = document.getElementById(id);
-            el.addEventListener('input', calcular);
-            el.addEventListener('change', calcular); // Para selectores de fecha
+        // Carga inicial por defecto solicitada
+        window.addEventListener('DOMContentLoaded', () => {
+            ui.pago.value = formatter.format(SMMLV);
+            ui.dias.value = 30;
+            calcular();
         });
 
-        // Navegación
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.onclick = () => {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                item.classList.add('active');
-                document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
-                document.getElementById(item.dataset.target).classList.add('active-view');
-            };
-        });
-
-        // Tema
-        document.getElementById('themeBtn').onclick = () => {
-            document.body.hasAttribute('data-theme') ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
-        };
+        ['dias', 'fecha1', 'fecha2'].forEach(id => document.getElementById(id).oninput = calcular);
     </script>
 </body>
 </html>
