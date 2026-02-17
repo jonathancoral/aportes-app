@@ -17,7 +17,6 @@
     <style>
         :root {
             --motion-emphasized: cubic-bezier(0.2, 0.0, 0, 1.0);
-            --duration-medium: 400ms;
             --md-sys-color-primary: #3949AB;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #DEE0FF;
@@ -51,7 +50,6 @@
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            transition: background-color var(--duration-medium);
         }
 
         .top-app-bar {
@@ -65,7 +63,6 @@
         .top-app-bar h1 {
             font-size: 24px;
             font-weight: 500;
-            font-variation-settings: 'wght' 500, 'GRAD' 50;
             margin: 0;
         }
 
@@ -81,13 +78,7 @@
         }
 
         .md-field-group { display: flex; flex-direction: column; gap: 10px; }
-
-        .md-label-static {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--md-sys-color-primary);
-            margin-left: 8px;
-        }
+        .md-label-static { font-size: 14px; font-weight: 600; color: var(--md-sys-color-primary); margin-left: 8px; }
 
         .md-text-field {
             background-color: var(--md-sys-color-surface-container-high);
@@ -95,117 +86,53 @@
             height: 64px;
             display: flex;
             padding: 0 24px;
-            transition: border-color 0.2s;
             border: 2px solid transparent;
         }
         
-        .md-text-field:focus-within {
-            border-color: var(--md-sys-color-primary);
-            background-color: var(--md-sys-color-surface);
-        }
+        .md-text-field:focus-within { border-color: var(--md-sys-color-primary); background-color: var(--md-sys-color-surface); }
 
         .md-text-field input {
-            width: 100%;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-family: inherit;
-            font-size: 18px;
-            color: var(--md-sys-color-on-surface);
+            width: 100%; border: none; background: transparent; outline: none;
+            font-family: inherit; font-size: 18px; color: var(--md-sys-color-on-surface);
         }
 
         .segmented-button {
-            display: flex;
-            width: 100%;
-            height: 52px;
+            display: flex; width: 100%; height: 52px;
             border: 1px solid var(--md-sys-color-outline);
             border-radius: var(--md-sys-shape-extra-large);
             overflow: hidden;
         }
 
         .segment-item {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 600; cursor: pointer;
             color: var(--md-sys-color-on-surface);
             border-right: 1px solid var(--md-sys-color-outline);
         }
 
         .segment-item:last-child { border-right: none; }
+        .segment-item.active { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
 
-        .segment-item.active {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            font-variation-settings: 'wght' 700;
-        }
-
-        .md-card {
-            background-color: var(--md-sys-color-surface-container);
-            border-radius: var(--md-sys-shape-extra-large);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
+        .md-card { background-color: var(--md-sys-color-surface-container); border-radius: var(--md-sys-shape-extra-large); padding: 24px; display: flex; flex-direction: column; gap: 18px; }
         .card-row { display: flex; justify-content: space-between; align-items: center; }
         .row-label { font-size: 15px; opacity: 0.7; }
         .row-value { font-size: 17px; font-weight: 600; }
 
-        .total-pill {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            padding: 24px;
-            border-radius: 28px;
-            margin-top: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .total-pill { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 24px; border-radius: 28px; display: flex; justify-content: space-between; align-items: center; }
         .total-value { font-size: 28px; font-weight: 700; }
 
         .nav-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 84px;
+            position: fixed; bottom: 0; left: 0; right: 0; height: 84px;
             background-color: var(--md-sys-color-surface-container);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+            display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
             z-index: 1000;
             box-shadow: 0px -1px 4px rgba(0,0,0,0.05);
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            color: var(--md-sys-color-on-surface-variant);
-            flex: 1;
-        }
-
-        .nav-pill {
-            width: 64px; height: 32px;
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            transition: background-color 0.2s;
-        }
-
-        .nav-item.active .nav-pill {
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-        }
-
-        .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; color: var(--md-sys-color-on-surface-variant); flex: 1; }
+        .nav-pill { width: 64px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s; }
+        .nav-item.active .nav-pill { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
         .nav-label { font-size: 12px; font-weight: 600; }
 
         .hidden { display: none !important; }
@@ -234,7 +161,7 @@
                 <label class="md-label-static">Método de liquidación</label>
                 <div class="segmented-button">
                     <div class="segment-item active" id="btn-manual" onclick="toggleMetodo('1')">Por Días</div>
-                    <div class="segment-item" id="btn-fecha" onclick="toggleMetodo('2')">Por Fechas</div>
+                    <div class="segment-item" id="id-btn-fecha" onclick="toggleMetodo('2')">Por Fechas</div>
                 </div>
                 <input type="hidden" id="metodoValue" value="1">
             </div>
@@ -262,22 +189,10 @@
             </div>
 
             <div class="md-card">
-                <div class="card-row">
-                    <span class="row-label">Base IBC</span>
-                    <span class="row-value" id="out-ibc">$0</span>
-                </div>
-                <div class="card-row">
-                    <span class="row-label">Tiempo liquidado</span>
-                    <span class="row-value" id="out-dias">0 días</span>
-                </div>
-                <div class="card-row">
-                    <span class="row-label">Salud (12.5%)</span>
-                    <span class="row-value" id="out-salud">$0</span>
-                </div>
-                <div class="card-row">
-                    <span class="row-label">Pensión (16.0%)</span>
-                    <span class="row-value" id="out-pension">$0</span>
-                </div>
+                <div class="card-row"><span class="row-label">Base IBC</span><span class="row-value" id="out-ibc">$0</span></div>
+                <div class="card-row"><span class="row-label">Tiempo liquidado</span><span class="row-value" id="out-dias">0 días</span></div>
+                <div class="card-row"><span class="row-label">Salud (12.5%)</span><span class="row-value" id="out-salud">$0</span></div>
+                <div class="card-row"><span class="row-label">Pensión (16.0%)</span><span class="row-value" id="out-pension">$0</span></div>
                 <div class="total-pill">
                     <span style="font-weight:600; font-size:18px;">Total Aportes</span>
                     <span class="total-value" id="out-total">$0</span>
@@ -297,18 +212,11 @@
                 <p style="margin:4px 0 0 0; font-size:13px; opacity:0.7;">jonathancoral@unicomfacauca.edu.co</p>
             </div>
         </section>
-
     </main>
 
     <nav class="nav-bar">
-        <div class="nav-item active" data-target="view-home">
-            <div class="nav-pill"><span class="material-symbols-rounded">calculate</span></div>
-            <span class="nav-label">Calcular</span>
-        </div>
-        <div class="nav-item" data-target="view-settings">
-            <div class="nav-pill"><span class="material-symbols-rounded">settings</span></div>
-            <span class="nav-label">Ajustes</span>
-        </div>
+        <div class="nav-item active" data-target="view-home"><div class="nav-pill"><span class="material-symbols-rounded">calculate</span></div><span class="nav-label">Calcular</span></div>
+        <div class="nav-item" data-target="view-settings"><div class="nav-pill"><span class="material-symbols-rounded">settings</span></div><span class="nav-label">Ajustes</span></div>
     </nav>
 
     <script>
@@ -318,6 +226,7 @@
             dias: document.getElementById('dias'),
             fecha1: document.getElementById('fecha1'),
             fecha2: document.getElementById('fecha2'),
+            metodoValue: document.getElementById('metodoValue'), // Agregado explícitamente
             outIbc: document.getElementById('out-ibc'),
             outDias: document.getElementById('out-dias'),
             outSalud: document.getElementById('out-salud'),
@@ -328,35 +237,41 @@
         const format = (n) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
 
         function calcular() {
-            const pago = parseFloat(ui.pago.value) || 0;
-            const met = document.getElementById('metodoValue').value;
+            const pagoVal = parseFloat(ui.pago.value) || 0;
+            const met = ui.metodoValue.value;
             let d = 0;
 
             if (met === '1') {
                 d = parseInt(ui.dias.value) || 0;
             } else {
                 if (ui.fecha1.value && ui.fecha2.value) {
-                    // Usar Date.parse o sumar zona horaria para evitar desfases de medianoche
-                    const start = new Date(ui.fecha1.value + 'T00:00:00');
-                    const end = new Date(ui.fecha2.value + 'T00:00:00');
+                    // Limpieza de fechas para evitar problemas de zona horaria
+                    const f1 = new Date(ui.fecha1.value + 'T00:00:00');
+                    const f2 = new Date(ui.fecha2.value + 'T00:00:00');
                     
-                    if (!isNaN(start) && !isNaN(end) && end >= start) {
-                        const diff = end - start;
-                        d = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+                    if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) {
+                        d = Math.floor((f2 - f1) / (1000 * 60 * 60 * 24)) + 1;
                     }
                 }
             }
 
-            if (pago <= 0 || d <= 0) return resetUI();
+            if (pagoVal <= 0 || d <= 0) {
+                return resetUI();
+            }
 
-            let ibc = Math.max(pago * 0.4, SMMLV);
-            const sD = (ibc * 0.125) / 30, pD = (ibc * 0.16) / 30;
+            // Lógica exacta del .bat
+            let ibc = Math.max(pagoVal * 0.4, SMMLV);
+            const sD = (ibc * 0.125) / 30;
+            const pD = (ibc * 0.16) / 30;
+
             const rnd = (v) => { 
                 let e = Math.floor(v); 
                 return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; 
             };
 
-            const tS = rnd(sD * d), tP = rnd(pD * d), total = rnd(tS + tP);
+            const tS = rnd(sD * d);
+            const tP = rnd(pD * d);
+            const total = rnd(tS + tP);
 
             ui.outIbc.textContent = format(ibc);
             ui.outDias.textContent = d + " días";
@@ -374,19 +289,19 @@
         }
 
         function toggleMetodo(v) {
-            document.getElementById('metodoValue').value = v;
+            ui.metodoValue.value = v;
             document.getElementById('btn-manual').classList.toggle('active', v === '1');
-            document.getElementById('btn-fecha').classList.toggle('active', v === '2');
+            document.getElementById('id-btn-fecha').classList.toggle('active', v === '2');
             document.getElementById('group-dias').classList.toggle('hidden', v === '2');
             document.getElementById('group-fechas').classList.toggle('hidden', v === '1');
-            // IMPORTANTE: Recalcular inmediatamente al cambiar de pestaña
             calcular(); 
         }
 
-        // Listener para todos los cambios de input
+        // Listeners robustos
         ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calcular);
-            document.getElementById(id).addEventListener('change', calcular);
+            const el = document.getElementById(id);
+            el.addEventListener('input', calcular);
+            el.addEventListener('change', calcular); // Para selectores de fecha
         });
 
         // Navegación
