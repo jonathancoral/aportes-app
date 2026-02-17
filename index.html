@@ -8,6 +8,7 @@
     
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,GRAD@8..144,300..700,-50..150&display=swap" rel="stylesheet">
@@ -15,22 +16,17 @@
 
     <style>
         :root {
-            /* M3 Motion & Physics */
             --motion-emphasized: cubic-bezier(0.2, 0.0, 0, 1.0);
             --duration-medium: 400ms;
-
-            /* M3 Expressive Tokens (Cobalt Tone) */
             --md-sys-color-primary: #3949AB;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #DEE0FF;
             --md-sys-color-on-primary-container: #00105C;
             --md-sys-color-surface: #F9F9FF;
             --md-sys-color-on-surface: #1A1B21;
-            /* Surface Container High para los inputs (más oscuro que el fondo) */
             --md-sys-color-surface-container: #EDEDF4;
             --md-sys-color-surface-container-high: #E2E2E9;
             --md-sys-color-outline: #767680;
-
             --md-sys-shape-extra-large: 28px;
         }
 
@@ -58,7 +54,6 @@
             transition: background-color var(--duration-medium);
         }
 
-        /* 1. Header: Tipografía de alto impacto */
         .top-app-bar {
             height: 80px;
             display: flex;
@@ -70,14 +65,13 @@
         .top-app-bar h1 {
             font-size: 24px;
             font-weight: 500;
-            font-variation-settings: 'wght' 500, 'GRAD' 50; /* Un poco de brillo tipográfico */
+            font-variation-settings: 'wght' 500, 'GRAD' 50;
             margin: 0;
         }
 
-        /* 2. Scaffold Body: Espaciado generoso */
         .scaffold-body {
             flex: 1;
-            padding: 8px 24px 120px 24px; /* Aumentamos el padding inferior para evitar el error de la barra */
+            padding: 8px 24px 120px 24px;
             max-width: 500px;
             margin: 0 auto;
             width: 100%;
@@ -86,29 +80,22 @@
             gap: 28px;
         }
 
-        /* Estilos de Grupo de Campo */
-        .md-field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .md-field-group { display: flex; flex-direction: column; gap: 10px; }
 
         .md-label-static {
             font-size: 14px;
             font-weight: 600;
             color: var(--md-sys-color-primary);
             margin-left: 8px;
-            letter-spacing: 0.1px;
         }
 
-        /* 3. Inputs: Limpios y Pills (Android 16 Style) */
         .md-text-field {
             background-color: var(--md-sys-color-surface-container-high);
             border-radius: 24px;
             height: 64px;
             display: flex;
             padding: 0 24px;
-            transition: transform 0.1s var(--motion-emphasized);
+            transition: border-color 0.2s;
             border: 2px solid transparent;
         }
         
@@ -123,12 +110,10 @@
             background: transparent;
             outline: none;
             font-family: inherit;
-            font-size: 18px; /* Texto más grande solicitado */
-            font-weight: 400;
+            font-size: 18px;
             color: var(--md-sys-color-on-surface);
         }
 
-        /* 4. Segmented Buttons: Refinados */
         .segmented-button {
             display: flex;
             width: 100%;
@@ -146,7 +131,7 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s var(--motion-emphasized);
+            transition: all 0.2s;
             color: var(--md-sys-color-on-surface);
             border-right: 1px solid var(--md-sys-color-outline);
         }
@@ -159,9 +144,6 @@
             font-variation-settings: 'wght' 700;
         }
 
-        .segment-item:active { transform: scale(0.96); }
-
-        /* 5. Resultados y Cards */
         .md-card {
             background-color: var(--md-sys-color-surface-container);
             border-radius: var(--md-sys-shape-extra-large);
@@ -172,7 +154,7 @@
         }
 
         .card-row { display: flex; justify-content: space-between; align-items: center; }
-        .row-label { font-size: 15px; opacity: 0.7; font-weight: 400; }
+        .row-label { font-size: 15px; opacity: 0.7; }
         .row-value { font-size: 17px; font-weight: 600; }
 
         .total-pill {
@@ -186,20 +168,19 @@
             align-items: center;
         }
 
-        .total-value { font-size: 28px; font-weight: 700; font-variation-settings: 'wght' 700; }
+        .total-value { font-size: 28px; font-weight: 700; }
 
-        /* 6. Navigation Bar: Corregido el problema de la franja */
         .nav-bar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             height: 84px;
-            background-color: var(--md-sys-color-surface-container); /* Color sólido */
+            background-color: var(--md-sys-color-surface-container);
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
-            z-index: 1000; /* Prioridad máxima */
-            box-shadow: 0px -1px 0px 0px var(--md-sys-color-outline-variant); /* Línea sutil superior */
+            z-index: 1000;
+            box-shadow: 0px -1px 4px rgba(0,0,0,0.05);
         }
 
         .nav-item {
@@ -216,7 +197,7 @@
             width: 64px; height: 32px;
             border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            transition: background-color 0.2s var(--motion-emphasized);
+            transition: background-color 0.2s;
         }
 
         .nav-item.active .nav-pill {
@@ -225,11 +206,11 @@
         }
 
         .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
-        .nav-label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+        .nav-label { font-size: 12px; font-weight: 600; }
 
         .hidden { display: none !important; }
         .view-section { display: none; }
-        .active-view { display: flex; flex-direction: column; gap: 28px; animation: fadeIn 0.4s var(--motion-emphasized); }
+        .active-view { display: flex; flex-direction: column; gap: 28px; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
     </style>
 </head>
@@ -242,7 +223,6 @@
     <main class="scaffold-body">
         
         <section id="view-home" class="view-section active-view">
-            
             <div class="md-field-group">
                 <label class="md-label-static">Ingreso mensual</label>
                 <div class="md-text-field">
@@ -352,18 +332,29 @@
             const met = document.getElementById('metodoValue').value;
             let d = 0;
 
-            if (met === '1') d = parseInt(ui.dias.value) || 0;
-            else {
-                const f1 = new Date(ui.fecha1.value + 'T00:00:00');
-                const f2 = new Date(ui.fecha2.value + 'T00:00:00');
-                if (!isNaN(f1) && !isNaN(f2) && f2 >= f1) d = Math.floor((f2 - f1) / 864e5) + 1;
+            if (met === '1') {
+                d = parseInt(ui.dias.value) || 0;
+            } else {
+                if (ui.fecha1.value && ui.fecha2.value) {
+                    // Usar Date.parse o sumar zona horaria para evitar desfases de medianoche
+                    const start = new Date(ui.fecha1.value + 'T00:00:00');
+                    const end = new Date(ui.fecha2.value + 'T00:00:00');
+                    
+                    if (!isNaN(start) && !isNaN(end) && end >= start) {
+                        const diff = end - start;
+                        d = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+                    }
+                }
             }
 
             if (pago <= 0 || d <= 0) return resetUI();
 
             let ibc = Math.max(pago * 0.4, SMMLV);
             const sD = (ibc * 0.125) / 30, pD = (ibc * 0.16) / 30;
-            const rnd = (v) => { let e = Math.floor(v); return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; };
+            const rnd = (v) => { 
+                let e = Math.floor(v); 
+                return (e % 100 !== 0) ? (Math.floor(e / 100) + 1) * 100 : e; 
+            };
 
             const tS = rnd(sD * d), tP = rnd(pD * d), total = rnd(tS + tP);
 
@@ -374,7 +365,13 @@
             ui.outTotal.textContent = format(total);
         }
 
-        function resetUI() { ui.outTotal.textContent = "$0"; ui.outIbc.textContent = "$0"; ui.outDias.textContent = "0 días"; }
+        function resetUI() { 
+            ui.outTotal.textContent = "$0"; 
+            ui.outIbc.textContent = "$0"; 
+            ui.outDias.textContent = "0 días"; 
+            ui.outSalud.textContent = "$0";
+            ui.outPension.textContent = "$0";
+        }
 
         function toggleMetodo(v) {
             document.getElementById('metodoValue').value = v;
@@ -382,11 +379,17 @@
             document.getElementById('btn-fecha').classList.toggle('active', v === '2');
             document.getElementById('group-dias').classList.toggle('hidden', v === '2');
             document.getElementById('group-fechas').classList.toggle('hidden', v === '1');
-            calcular();
+            // IMPORTANTE: Recalcular inmediatamente al cambiar de pestaña
+            calcular(); 
         }
 
-        ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => document.getElementById(id).oninput = calcular);
+        // Listener para todos los cambios de input
+        ['pago', 'dias', 'fecha1', 'fecha2'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calcular);
+            document.getElementById(id).addEventListener('change', calcular);
+        });
 
+        // Navegación
         document.querySelectorAll('.nav-item').forEach(item => {
             item.onclick = () => {
                 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -396,6 +399,7 @@
             };
         });
 
+        // Tema
         document.getElementById('themeBtn').onclick = () => {
             document.body.hasAttribute('data-theme') ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
         };
